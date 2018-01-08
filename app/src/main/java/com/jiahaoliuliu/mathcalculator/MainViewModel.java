@@ -1,7 +1,7 @@
 package com.jiahaoliuliu.mathcalculator;
 
+import java.util.LinkedList;
 import java.util.Random;
-import java.util.Stack;
 
 import com.jiahaoliuliu.mathcalculator.MathOperationModel.Operation;
 
@@ -9,14 +9,14 @@ public class MainViewModel {
     private static final int MAX_LIST_SIZE = 5;
     private static final int MAXIMUM_NUMBER = 100;
 
-    private Stack<MathOperationModel> mathOperationModelsStack;
+    private LinkedList<MathOperationModel> mathOperationModelsLinkedList;
 
     // Singleton
     private static MainViewModel mainViewModel;
 
     private MainViewModel() {
         // init the variable
-        mathOperationModelsStack = new Stack<>();
+        mathOperationModelsLinkedList = new LinkedList<>();
     }
 
     public static MainViewModel getInstance() {
@@ -34,7 +34,7 @@ public class MainViewModel {
         }
 
         // Restart the content of the list
-        mathOperationModelsStack.clear();
+        mathOperationModelsLinkedList.clear();
 
         for (int i = 0; i < finalLisSize; i++) {
             MathOperationModel mathOperationModel = generateMathOperationModel();
@@ -42,12 +42,12 @@ public class MainViewModel {
             if (i == finalLisSize - 1) {
                 mathOperationModel.setLastOperation(true);
             }
-            mathOperationModelsStack.push(mathOperationModel);
+            mathOperationModelsLinkedList.add(mathOperationModel);
         }
     }
 
     public MathOperationModel getNextMathOperationModel() {
-        return mathOperationModelsStack.pop();
+        return mathOperationModelsLinkedList.removeFirst();
     }
 
     private MathOperationModel generateMathOperationModel() {

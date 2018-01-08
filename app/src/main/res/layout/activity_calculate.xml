@@ -103,7 +103,7 @@
             <!-- Finish button -->
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/finish"
                 android:visibility="@{MathOperation.lastOperation? View.VISIBLE : View.GONE}"
                 tools:visibility="gone"
