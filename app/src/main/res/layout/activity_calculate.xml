@@ -41,7 +41,7 @@
                     android:textSize="20sp"
                     android:layout_weight="0.1"
                     android:gravity="center"
-                    android:text="@{MathOperation.firstNumber}"
+                    android:text="@{Integer.toString(MathOperation.firstNumber)}"
                     tools:text="50"
                     />
 
@@ -61,7 +61,7 @@
                     android:textSize="20sp"
                     android:layout_weight="0.1"
                     android:gravity="center"
-                    android:text="@{MathOperation.secondNumber}"
+                    android:text="@{Integer.toString(MathOperation.secondNumber)}"
                     tools:text="20"
                     />
 
@@ -97,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/next"
                 android:visibility=
-                    "@{MathOperation.lastOperation? View.VISIBLE: View.GONE}"
+                    "@{!MathOperation.lastOperation? View.VISIBLE: View.GONE}"
                 />
 
             <!-- Finish button -->

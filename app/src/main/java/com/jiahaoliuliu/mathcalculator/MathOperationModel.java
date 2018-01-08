@@ -3,10 +3,21 @@ package com.jiahaoliuliu.mathcalculator;
 public class MathOperationModel {
 
     public enum Operation {
-        ADDITION("+"), EXTRACTION("-");
+        ADDITION("+") {
+            @Override
+            int operate(int firstNumber, int secondNumber) {
+                return firstNumber + secondNumber;
+            }
+        }, EXTRACTION("-") {
+            @Override
+            int operate(int firstNumber, int secondNumber) {
+                return firstNumber - secondNumber;
+            }
+        };
 //        , MULTIPLICATION, DIVISION
 
         private String symbol;
+
 
         Operation(String symbol) {
             this.symbol = symbol;
@@ -14,6 +25,14 @@ public class MathOperationModel {
 
         public String getSymbol() {
             return symbol;
+        }
+
+        abstract int operate(int firstNumber, int secondNumber);
+
+        // Static method
+        public static Operation retrieveOperation(int order) {
+            // TODO: implement this
+            return ADDITION;
         }
     }
 
