@@ -2,4 +2,6 @@
     <string name="app_name">MathCalculator</string>
     <string name="start">Start</string>
     <string name="title_activity_calculate">CalculateActivity</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
 </resources>

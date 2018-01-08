@@ -1,18 +1,23 @@
 package com.jiahaoliuliu.mathcalculator;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+
+import com.jiahaoliuliu.mathcalculator.databinding.ActivityCalculateBinding;
+import com.jiahaoliuliu.mathcalculator.MathOperationModel.Operation;
 
 public class CalculateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculate);
+        ActivityCalculateBinding activityCalculateBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_calculate);
+        MathOperationModel mathOperationModel =
+                new MathOperationModel(1, Operation.ADDITION, 2,
+                        3, false);
+        activityCalculateBinding.setMathOperation(mathOperationModel);
     }
 
 }
