@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityCalculateBinding;
@@ -28,12 +30,18 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
                 DataBindingUtil.setContentView(this, R.layout.activity_calculate);
         activityCalculateBinding.setCalculationClickListener(this);
 
+        // Set the model
         mainViewModel = MainViewModel.getInstance();
         currentOperationModel = mainViewModel.getNextMathOperationModel();
         if (currentOperationModel != null) {
             activityCalculateBinding.setMathOperationModel(currentOperationModel);
         } // Else should never happens
 
+        // Set the edit text
+        setEditText();
+    }
+
+    private void setEditText() {
         // Request focus for the edit text
         if(activityCalculateBinding.givenResult.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -41,9 +49,26 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
         // Update the done button on the soft keyboard
         if (currentOperationModel.isLastOperation()) {
-            activityCalculateBinding.givenResult.setImeActionLabel(getString(R.string.finish),
-                    EditorInfo.IME_ACTION_DONE);
+            activityCalculateBinding.givenResult.setImeOptions(EditorInfo.IME_ACTION_DONE);
         }
+
+        // Listen to the done actions
+        activityCalculateBinding.givenResult.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    onNextClicked();
+                    return true;
+                }
+
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onFinishClicked();
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -65,6 +90,7 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
     @Override
     public void onFinishClicked() {
+        Log.v(TAG, "Finish clicked");
         // TODO: Finish the current activity
         int operation = 1;
     }
