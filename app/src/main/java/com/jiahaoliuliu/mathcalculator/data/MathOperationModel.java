@@ -13,8 +13,14 @@ public class MathOperationModel {
             int operate(int firstNumber, int secondNumber) {
                 return firstNumber - secondNumber;
             }
-        };
-//        , MULTIPLICATION, DIVISION
+        }, MULTIPLICATION("x") {
+            @Override
+            int operate(int firstNumber, int secondNumber) {
+                return firstNumber * secondNumber;
+            }
+        }
+//        , DIVISION
+        ;
 
         private String symbol;
 

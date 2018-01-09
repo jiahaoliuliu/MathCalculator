@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 public class MainViewModel {
-    private static final int MAX_LIST_SIZE = 10;
-    private static final int MAXIMUM_NUMBER = 100;
+    private static final boolean ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION = false;
+    private static final int MAXIMUM_NUMBER_ON_ADDITION = 100;
+    private static final int MAXIMUM_NUMBER_ON_MULTIPLICATION = 10;
 
     private List<MathOperationModel> mathOperationModelsCollection;
     private Iterator<MathOperationModel> collectionIterator;
@@ -29,19 +30,20 @@ public class MainViewModel {
     }
 
     public void generateNewMathOperationModelsList(int listSize) {
-        int finalLisSize = listSize;
-        if (listSize > MAX_LIST_SIZE) {
-            finalLisSize = MAX_LIST_SIZE;
-        }
-
         // Restart the content of the list
         mathOperationModelsCollection.clear();
         collectionIterator = null;
 
-        for (int i = 0; i < finalLisSize; i++) {
+        for (int i = 0; i < listSize; i++) {
             MathOperationModel mathOperationModel = generateMathOperationModel();
+
+            // Avoid duplications
+            while(mathOperationModelsCollection.contains(mathOperationModel)) {
+                mathOperationModel = generateMathOperationModel();
+            }
+
             // if it is the last number
-            if (i == finalLisSize - 1) {
+            if (i == listSize - 1) {
                 mathOperationModel.setLastOperation(true);
             }
             mathOperationModelsCollection.add(mathOperationModel);
@@ -75,16 +77,42 @@ public class MainViewModel {
 
     private MathOperationModel generateMathOperationModel() {
         Random random = new Random();
-        int firstNumber = random.nextInt(MAXIMUM_NUMBER);
-        int secondNumber = random.nextInt(MAXIMUM_NUMBER);
         MathOperationModel.Operation mathOperation =
             MathOperationModel.Operation.retrieveOperation(
                     random.nextInt(MathOperationModel.Operation.values().length));
-
-        // For now the negative number on extraction is not allowed. The new number i
-        while (mathOperation == MathOperationModel.Operation.EXTRACTION && secondNumber > firstNumber) {
-            secondNumber = random.nextInt(firstNumber);
+        int firstNumber = 0;
+        int secondNumber = 0;
+        switch (mathOperation) {
+            case ADDITION:
+                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                // Not exceed the maximum number
+                if (mathOperation.operate(firstNumber, secondNumber) > MAXIMUM_NUMBER_ON_ADDITION) {
+                    // Generate a new number from the first number
+                    int result = random.nextInt(
+                            MAXIMUM_NUMBER_ON_ADDITION - firstNumber + 1 ) + firstNumber;
+                    secondNumber = result - firstNumber;
+                }
+                break;
+            case EXTRACTION:
+                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                // Negative number on extraction
+                if (!ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION) {
+                    // For now the negative number on extraction is not allowed. The new number i
+                    while ( secondNumber > firstNumber) {
+                        secondNumber = random.nextInt(firstNumber);
+                    }
+                }
+                break;
+            case MULTIPLICATION:
+                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_MULTIPLICATION);
+                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_MULTIPLICATION);
+                // There is not other restriction on multiplication
+                break;
         }
+
+
         int correctResult = mathOperation.operate(firstNumber, secondNumber);
 
         return new MathOperationModel(firstNumber, mathOperation, secondNumber,
