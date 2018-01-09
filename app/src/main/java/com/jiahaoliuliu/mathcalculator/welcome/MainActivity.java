@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.welcome;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.jiahaoliuliu.mathcalculator.data.MainViewModel;
+import com.jiahaoliuliu.mathcalculator.R;
+import com.jiahaoliuliu.mathcalculator.calculate.CalculateActivity;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

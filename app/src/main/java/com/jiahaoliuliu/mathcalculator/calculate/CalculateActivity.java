@@ -1,7 +1,6 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.calculate;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jiahaoliuliu.mathcalculator.data.MainViewModel;
+import com.jiahaoliuliu.mathcalculator.data.MathOperationModel;
+import com.jiahaoliuliu.mathcalculator.R;
+import com.jiahaoliuliu.mathcalculator.result.ResultActivity;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityCalculateBinding;
 
 public class CalculateActivity extends AppCompatActivity implements CalculationClickListener {
@@ -73,15 +76,10 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
     @Override
     public void onNextClicked() {
-        // Get the result
-        String givenResultString = activityCalculateBinding.givenResult.getText().toString();
-        if (TextUtils.isEmpty(givenResultString)) {
-            Log.w(TAG, "The input given result is empty");
-            Toast.makeText(this, R.string.error_given_result_empty, Toast.LENGTH_LONG).show();
+        // Update the given result
+        if (!updateTheGivenResult()) {
             return;
         }
-        currentOperationModel.setGivenResult(
-                Integer.parseInt(givenResultString));
         // Show next result
         Intent showNextCalculateActivityIntent = new Intent(this, CalculateActivity.class);
         startActivity(showNextCalculateActivityIntent);
@@ -90,8 +88,28 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
     @Override
     public void onFinishClicked() {
+        // Update the given result
+        if (!updateTheGivenResult()) {
+            return;
+        }
         Log.v(TAG, "Finish clicked");
-        // TODO: Finish the current activity
-        int operation = 1;
+        Intent startResultActivityIntent = new Intent(this, ResultActivity.class);
+        startActivity(startResultActivityIntent);
+        finish();
+    }
+
+    private boolean updateTheGivenResult() {
+
+        // Get the result
+        String givenResultString = activityCalculateBinding.givenResult.getText().toString();
+        if (TextUtils.isEmpty(givenResultString)) {
+            Log.w(TAG, "The input given result is empty");
+            Toast.makeText(this, R.string.error_given_result_empty, Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        currentOperationModel.setGivenResult(
+                Integer.parseInt(givenResultString));
+        return true;
     }
 }

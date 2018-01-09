@@ -17,4 +17,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="NormalText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CorrectResult" parent="NormalText">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrongResult" parent="NormalText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/strike</item>
+    </style>
 </resources>

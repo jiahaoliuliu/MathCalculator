@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <data>
         <import type="android.view.View"/>
         <variable
             name="mathOperationModel"
             type="com.jiahaoliuliu.mathcalculator.data.MathOperationModel"
             />
-        <variable
-            name="calculationClickListener"
-            type="com.jiahaoliuliu.mathcalculator.calculate.CalculationClickListener"
-            />
     </data>
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardBackgroundColor=
+            "@{mathOperationModel.givenResult == mathOperationModel.correctResult ? @color/correctResultBackground : @color/wrongResultBackground}"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         >
-
         <!-- Main calculation -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            style="@style/NormalText"
-            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="20dp"
             >
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 >
                 <TextView
                     android:id="@+id/first_number"
@@ -69,50 +72,38 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    style="@style/NormalText"
                     android:layout_weight="0.1"
+                    style="@style/NormalText"
                     android:text="="
                     />
             </LinearLayout>
-            <EditText
-                android:id="@+id/given_result"
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                style="@style/NormalText"
-                android:inputType="number"
-                android:lines="1"
-                android:imeOptions="actionNext"
-                />
-        </LinearLayout>
-
-        <!-- Next button -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            >
-
-            <!-- Next Button -->
-            <Button
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/next"
-                android:visibility=
-                    "@{!mathOperationModel.lastOperation? View.VISIBLE: View.GONE}"
-                android:onClick="@{() -> calculationClickListener.onNextClicked()}"
-                />
-
-            <!-- Finish button -->
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/finish"
-                android:visibility="@{mathOperationModel.lastOperation? View.VISIBLE : View.GONE}"
-                tools:visibility="gone"
-                android:onClick="@{() -> calculationClickListener.onFinishClicked()}"
-                />
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                >
+                <!-- Given result -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    style="@style/WrongResult"
+                    android:text="@{Integer.toString(mathOperationModel.givenResult)}"
+                    android:visibility="@{mathOperationModel.givenResult == mathOperationModel.correctResult? View.GONE: View.VISIBLE}"
+                    tools:text="22"
+                    />
+                <!-- Correct result -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    style="@style/CorrectResult"
+                    android:text="@{Integer.toString(mathOperationModel.correctResult)}"
+                    tools:text="25"
+                    />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 </layout>

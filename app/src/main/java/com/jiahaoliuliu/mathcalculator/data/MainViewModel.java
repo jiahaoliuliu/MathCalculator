@@ -1,12 +1,9 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
-import com.jiahaoliuliu.mathcalculator.MathOperationModel.Operation;
 
 public class MainViewModel {
     private static final int MAX_LIST_SIZE = 5;
@@ -53,6 +50,12 @@ public class MainViewModel {
         collectionIterator = mathOperationModelsCollection.iterator();
     }
 
+    /**
+     * Get the next math operation to be done
+     *
+     * @return
+     *      The next math operation
+     */
     public MathOperationModel getNextMathOperationModel() {
         if (collectionIterator != null && collectionIterator.hasNext()) {
             return collectionIterator.next();
@@ -61,15 +64,24 @@ public class MainViewModel {
         return null;
     }
 
+    /**
+     * Get the list of results
+     * @return
+     *      The list of results
+     */
+    public List<MathOperationModel> getResultsList() {
+        return mathOperationModelsCollection;
+    }
+
     private MathOperationModel generateMathOperationModel() {
         Random random = new Random();
         int firstNumber = random.nextInt(MAXIMUM_NUMBER);
         int secondNumber = random.nextInt(MAXIMUM_NUMBER);
         MathOperationModel.Operation mathOperation =
-            Operation.retrieveOperation(random.nextInt(Operation.values().length));
+            MathOperationModel.Operation.retrieveOperation(random.nextInt(MathOperationModel.Operation.values().length));
 
         // For now the negative number on extraction is not allowed. The new number i
-        if (mathOperation == Operation.EXTRACTION && secondNumber < firstNumber) {
+        if (mathOperation == MathOperationModel.Operation.EXTRACTION && secondNumber < firstNumber) {
             secondNumber = random.nextInt((MAXIMUM_NUMBER - firstNumber) + 1) + firstNumber;
         }
         int correctResult = mathOperation.operate(firstNumber, secondNumber);

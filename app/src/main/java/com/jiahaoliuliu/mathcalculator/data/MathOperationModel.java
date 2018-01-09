@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.data;
 
 public class MathOperationModel {
 
