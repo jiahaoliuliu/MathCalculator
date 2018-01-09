@@ -13,8 +13,14 @@ public class MathOperationModel {
             int operate(int firstNumber, int secondNumber) {
                 return firstNumber - secondNumber;
             }
-        };
-//        , MULTIPLICATION, DIVISION
+        }, MULTIPLICATION("x") {
+            @Override
+            int operate(int firstNumber, int secondNumber) {
+                return firstNumber * secondNumber;
+            }
+        }
+//        , DIVISION
+        ;
 
         private String symbol;
 
@@ -30,9 +36,13 @@ public class MathOperationModel {
         abstract int operate(int firstNumber, int secondNumber);
 
         // Static method
-        public static Operation retrieveOperation(int order) {
-            // TODO: implement this
-            return ADDITION;
+        public static Operation retrieveOperation(int ordinal) {
+            // If the order is bigger than the number of items, retrieve addition
+            if (ordinal > values().length -1 ) {
+                return ADDITION;
+            }
+
+            return values()[ordinal];
         }
     }
 
