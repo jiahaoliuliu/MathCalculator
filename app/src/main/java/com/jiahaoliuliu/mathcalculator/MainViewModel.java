@@ -1,6 +1,9 @@
 package com.jiahaoliuliu.mathcalculator;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import com.jiahaoliuliu.mathcalculator.MathOperationModel.Operation;
@@ -9,14 +12,15 @@ public class MainViewModel {
     private static final int MAX_LIST_SIZE = 5;
     private static final int MAXIMUM_NUMBER = 100;
 
-    private LinkedList<MathOperationModel> mathOperationModelsLinkedList;
+    private List<MathOperationModel> mathOperationModelsCollection;
+    private Iterator<MathOperationModel> collectionIterator;
 
     // Singleton
     private static MainViewModel mainViewModel;
 
     private MainViewModel() {
         // init the variable
-        mathOperationModelsLinkedList = new LinkedList<>();
+        mathOperationModelsCollection = new ArrayList<>();
     }
 
     public static MainViewModel getInstance() {
@@ -34,7 +38,8 @@ public class MainViewModel {
         }
 
         // Restart the content of the list
-        mathOperationModelsLinkedList.clear();
+        mathOperationModelsCollection.clear();
+        collectionIterator = null;
 
         for (int i = 0; i < finalLisSize; i++) {
             MathOperationModel mathOperationModel = generateMathOperationModel();
@@ -42,12 +47,18 @@ public class MainViewModel {
             if (i == finalLisSize - 1) {
                 mathOperationModel.setLastOperation(true);
             }
-            mathOperationModelsLinkedList.add(mathOperationModel);
+            mathOperationModelsCollection.add(mathOperationModel);
         }
+
+        collectionIterator = mathOperationModelsCollection.iterator();
     }
 
     public MathOperationModel getNextMathOperationModel() {
-        return mathOperationModelsLinkedList.removeFirst();
+        if (collectionIterator != null && collectionIterator.hasNext()) {
+            return collectionIterator.next();
+        }
+
+        return null;
     }
 
     private MathOperationModel generateMathOperationModel() {

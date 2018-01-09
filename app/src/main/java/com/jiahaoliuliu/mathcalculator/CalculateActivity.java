@@ -27,7 +27,9 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
         mainViewModel = MainViewModel.getInstance();
         currentOperationModel = mainViewModel.getNextMathOperationModel();
-        activityCalculateBinding.setMathOperationModel(currentOperationModel);
+        if (currentOperationModel != null) {
+            activityCalculateBinding.setMathOperationModel(currentOperationModel);
+        } // Else should never happens
     }
 
     @Override
