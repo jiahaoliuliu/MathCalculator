@@ -7,8 +7,12 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="MathOperation"
+            name="mathOperationModel"
             type="com.jiahaoliuliu.mathcalculator.MathOperationModel"
+            />
+        <variable
+            name="calculationClickListener"
+            type="com.jiahaoliuliu.mathcalculator.CalculationClickListener"
             />
     </data>
 
@@ -41,7 +45,7 @@
                     android:textSize="20sp"
                     android:layout_weight="0.1"
                     android:gravity="center"
-                    android:text="@{Integer.toString(MathOperation.firstNumber)}"
+                    android:text="@{Integer.toString(mathOperationModel.firstNumber)}"
                     tools:text="50"
                     />
 
@@ -51,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
                     android:gravity="center"
-                    android:text="@{MathOperation.operation.symbol}"
+                    android:text="@{mathOperationModel.operation.symbol}"
                     tools:text="+"
                     />
 
@@ -61,7 +65,7 @@
                     android:textSize="20sp"
                     android:layout_weight="0.1"
                     android:gravity="center"
-                    android:text="@{Integer.toString(MathOperation.secondNumber)}"
+                    android:text="@{Integer.toString(mathOperationModel.secondNumber)}"
                     tools:text="20"
                     />
 
@@ -74,6 +78,7 @@
                     />
             </LinearLayout>
             <EditText
+                android:id="@+id/given_result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -81,6 +86,7 @@
                 android:gravity="center"
                 android:inputType="number"
                 android:lines="1"
+                android:imeOptions="actionNext"
                 />
         </LinearLayout>
 
@@ -92,14 +98,14 @@
             android:orientation="horizontal"
             >
 
-            <!-- TODO: test the visibilities -->
             <!-- Next Button -->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/next"
                 android:visibility=
-                    "@{!MathOperation.lastOperation? View.VISIBLE: View.GONE}"
+                    "@{!mathOperationModel.lastOperation? View.VISIBLE: View.GONE}"
+                android:onClick="@{() -> calculationClickListener.onNextClicked()}"
                 />
 
             <!-- Finish button -->
@@ -107,8 +113,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/finish"
-                android:visibility="@{MathOperation.lastOperation? View.VISIBLE : View.GONE}"
+                android:visibility="@{mathOperationModel.lastOperation? View.VISIBLE : View.GONE}"
                 tools:visibility="gone"
+                android:onClick="@{() -> calculationClickListener.onFinishClicked()}"
                 />
         </LinearLayout>
     </LinearLayout>
