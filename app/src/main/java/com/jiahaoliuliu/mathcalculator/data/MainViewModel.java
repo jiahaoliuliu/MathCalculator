@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MainViewModel {
-    private static final int MAX_LIST_SIZE = 5;
+    private static final int MAX_LIST_SIZE = 10;
     private static final int MAXIMUM_NUMBER = 100;
 
     private List<MathOperationModel> mathOperationModelsCollection;
@@ -82,8 +82,8 @@ public class MainViewModel {
                     random.nextInt(MathOperationModel.Operation.values().length));
 
         // For now the negative number on extraction is not allowed. The new number i
-        if (mathOperation == MathOperationModel.Operation.EXTRACTION && secondNumber < firstNumber) {
-            secondNumber = random.nextInt((MAXIMUM_NUMBER - firstNumber) + 1) + firstNumber;
+        while (mathOperation == MathOperationModel.Operation.EXTRACTION && secondNumber > firstNumber) {
+            secondNumber = random.nextInt(firstNumber);
         }
         int correctResult = mathOperation.operate(firstNumber, secondNumber);
 
