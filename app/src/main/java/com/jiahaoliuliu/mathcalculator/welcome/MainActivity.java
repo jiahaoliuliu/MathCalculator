@@ -12,7 +12,7 @@ import com.jiahaoliuliu.mathcalculator.calculate.CalculateActivity;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int LIST_SIZE = 50;
+    private static final int LIST_SIZE = 5;
 
     private MainViewModel mainViewModel;
 

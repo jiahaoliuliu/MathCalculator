@@ -38,7 +38,8 @@ public class ResultActivity extends AppCompatActivity {
         activityResultBinding.resultList.setLayoutManager(layoutManager);
 
         // Set the adapter
-        resultsListAdapter = new ResultsListAdapter(mainViewModel.getResultsList());
+        resultsListAdapter = new ResultsListAdapter(
+                mainViewModel.getResultsList(), mainViewModel.getGeneralResult());
         activityResultBinding.resultList.setAdapter(resultsListAdapter);
     }
 

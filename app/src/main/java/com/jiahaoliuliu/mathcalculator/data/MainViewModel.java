@@ -75,6 +75,19 @@ public class MainViewModel {
         return mathOperationModelsCollection;
     }
 
+    public GeneralResult getGeneralResult() {
+        int numberOfCorrectResults = 0;
+        for (MathOperationModel mathOperationModel: mathOperationModelsCollection) {
+            if (mathOperationModel.getGivenResult() == mathOperationModel.getCorrectResult()) {
+                numberOfCorrectResults++;
+            }
+        }
+
+        return new GeneralResult(numberOfCorrectResults,
+                mathOperationModelsCollection.size() - numberOfCorrectResults);
+
+    }
+
     private MathOperationModel generateMathOperationModel() {
         Random random = new Random();
         MathOperationModel.Operation mathOperation =
