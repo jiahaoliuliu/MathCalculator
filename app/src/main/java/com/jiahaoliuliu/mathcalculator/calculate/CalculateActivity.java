@@ -76,15 +76,10 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
     @Override
     public void onNextClicked() {
-        // Get the result
-        String givenResultString = activityCalculateBinding.givenResult.getText().toString();
-        if (TextUtils.isEmpty(givenResultString)) {
-            Log.w(TAG, "The input given result is empty");
-            Toast.makeText(this, R.string.error_given_result_empty, Toast.LENGTH_LONG).show();
+        // Update the given result
+        if (!updateTheGivenResult()) {
             return;
         }
-        currentOperationModel.setGivenResult(
-                Integer.parseInt(givenResultString));
         // Show next result
         Intent showNextCalculateActivityIntent = new Intent(this, CalculateActivity.class);
         startActivity(showNextCalculateActivityIntent);
@@ -93,9 +88,28 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
     @Override
     public void onFinishClicked() {
+        // Update the given result
+        if (!updateTheGivenResult()) {
+            return;
+        }
         Log.v(TAG, "Finish clicked");
         Intent startResultActivityIntent = new Intent(this, ResultActivity.class);
         startActivity(startResultActivityIntent);
         finish();
+    }
+
+    private boolean updateTheGivenResult() {
+
+        // Get the result
+        String givenResultString = activityCalculateBinding.givenResult.getText().toString();
+        if (TextUtils.isEmpty(givenResultString)) {
+            Log.w(TAG, "The input given result is empty");
+            Toast.makeText(this, R.string.error_given_result_empty, Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        currentOperationModel.setGivenResult(
+                Integer.parseInt(givenResultString));
+        return true;
     }
 }
