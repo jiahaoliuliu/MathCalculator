@@ -91,7 +91,8 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
     @Override
     public void onFinishClicked() {
         Log.v(TAG, "Finish clicked");
-        // TODO: Finish the current activity
-        int operation = 1;
+        Intent startResultActivityIntent = new Intent(this, ResultActivity.class);
+        startActivity(startResultActivityIntent);
+        finish();
     }
 }

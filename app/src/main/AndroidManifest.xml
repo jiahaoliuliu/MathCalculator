@@ -19,6 +19,10 @@
         <activity
             android:name=".CalculateActivity"
             android:label="@string/title_activity_calculate"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ResultActivity"
+            android:label="@string/title_activity_result"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
