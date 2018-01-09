@@ -6,4 +6,8 @@
     <string name="finish">Finish</string>
     <string name="error_given_result_empty">The given result is empty. Please provide a result</string>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="pointsUnit">points</string>
+    <string name="correct_result_title">Correct:</string>
+    <string name="wrong_result_title">Wrong:</string>
+    <string name="total_result_title">Total:</string>
 </resources>

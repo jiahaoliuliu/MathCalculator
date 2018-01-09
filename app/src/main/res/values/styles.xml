@@ -30,4 +30,5 @@
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/strike</item>
     </style>
+
 </resources>
