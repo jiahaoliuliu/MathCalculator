@@ -8,11 +8,11 @@
         <import type="android.view.View"/>
         <variable
             name="mathOperationModel"
-            type="com.jiahaoliuliu.mathcalculator.MathOperationModel"
+            type="com.jiahaoliuliu.mathcalculator.data.MathOperationModel"
             />
         <variable
             name="calculationClickListener"
-            type="com.jiahaoliuliu.mathcalculator.CalculationClickListener"
+            type="com.jiahaoliuliu.mathcalculator.calculate.CalculationClickListener"
             />
     </data>
 

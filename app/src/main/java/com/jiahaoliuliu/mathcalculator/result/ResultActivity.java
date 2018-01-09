@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.result;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.jiahaoliuliu.mathcalculator.R;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityResultBinding;
 
 public class ResultActivity extends AppCompatActivity {

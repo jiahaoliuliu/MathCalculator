@@ -1,4 +1,4 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.calculate;
 
 /**
  * Created by jiahaoliuliu on 1/9/18.

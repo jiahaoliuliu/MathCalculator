@@ -1,7 +1,6 @@
-package com.jiahaoliuliu.mathcalculator;
+package com.jiahaoliuliu.mathcalculator.calculate;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jiahaoliuliu.mathcalculator.data.MainViewModel;
+import com.jiahaoliuliu.mathcalculator.data.MathOperationModel;
+import com.jiahaoliuliu.mathcalculator.R;
+import com.jiahaoliuliu.mathcalculator.result.ResultActivity;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityCalculateBinding;
 
 public class CalculateActivity extends AppCompatActivity implements CalculationClickListener {
