@@ -50,12 +50,27 @@ public class MainViewModel {
         collectionIterator = mathOperationModelsCollection.iterator();
     }
 
+    /**
+     * Get the next math operation to be done
+     *
+     * @return
+     *      The next math operation
+     */
     public MathOperationModel getNextMathOperationModel() {
         if (collectionIterator != null && collectionIterator.hasNext()) {
             return collectionIterator.next();
         }
 
         return null;
+    }
+
+    /**
+     * Get the list of results
+     * @return
+     *      The list of results
+     */
+    public List<MathOperationModel> getResultsList() {
+        return mathOperationModelsCollection;
     }
 
     private MathOperationModel generateMathOperationModel() {

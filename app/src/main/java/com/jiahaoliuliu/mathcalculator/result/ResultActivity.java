@@ -11,12 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.jiahaoliuliu.mathcalculator.R;
+import com.jiahaoliuliu.mathcalculator.data.MainViewModel;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityResultBinding;
 
 public class ResultActivity extends AppCompatActivity {
 
+    // View
     private ActivityResultBinding activityResultBinding;
+    private ResultsListAdapter resultsListAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    // Data
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +30,16 @@ public class ResultActivity extends AppCompatActivity {
         activityResultBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_result);
 
+        mainViewModel = MainViewModel.getInstance();
+
+        // Set the layout manager
         activityResultBinding.resultList.hasFixedSize();
         layoutManager = new LinearLayoutManager(this);
         activityResultBinding.resultList.setLayoutManager(layoutManager);
+
+        // Set the adapter
+        resultsListAdapter = new ResultsListAdapter(mainViewModel.getResultsList());
+        activityResultBinding.resultList.setAdapter(resultsListAdapter);
     }
 
 }
