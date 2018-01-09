@@ -1,12 +1,14 @@
 package com.jiahaoliuliu.mathcalculator;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityCalculateBinding;
@@ -35,6 +37,12 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
         // Request focus for the edit text
         if(activityCalculateBinding.givenResult.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+
+        // Update the done button on the soft keyboard
+        if (currentOperationModel.isLastOperation()) {
+            activityCalculateBinding.givenResult.setImeActionLabel(getString(R.string.finish),
+                    EditorInfo.IME_ACTION_DONE);
         }
     }
 
