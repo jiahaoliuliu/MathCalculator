@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityCalculateBinding;
@@ -30,6 +31,11 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
         if (currentOperationModel != null) {
             activityCalculateBinding.setMathOperationModel(currentOperationModel);
         } // Else should never happens
+
+        // Request focus for the edit text
+        if(activityCalculateBinding.givenResult.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
     @Override
