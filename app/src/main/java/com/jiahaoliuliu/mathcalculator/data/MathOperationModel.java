@@ -30,9 +30,13 @@ public class MathOperationModel {
         abstract int operate(int firstNumber, int secondNumber);
 
         // Static method
-        public static Operation retrieveOperation(int order) {
-            // TODO: implement this
-            return ADDITION;
+        public static Operation retrieveOperation(int ordinal) {
+            // If the order is bigger than the number of items, retrieve addition
+            if (ordinal > values().length -1 ) {
+                return ADDITION;
+            }
+
+            return values()[ordinal];
         }
     }
 

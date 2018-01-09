@@ -78,7 +78,8 @@ public class MainViewModel {
         int firstNumber = random.nextInt(MAXIMUM_NUMBER);
         int secondNumber = random.nextInt(MAXIMUM_NUMBER);
         MathOperationModel.Operation mathOperation =
-            MathOperationModel.Operation.retrieveOperation(random.nextInt(MathOperationModel.Operation.values().length));
+            MathOperationModel.Operation.retrieveOperation(
+                    random.nextInt(MathOperationModel.Operation.values().length));
 
         // For now the negative number on extraction is not allowed. The new number i
         if (mathOperation == MathOperationModel.Operation.EXTRACTION && secondNumber < firstNumber) {
