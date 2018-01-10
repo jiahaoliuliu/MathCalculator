@@ -122,7 +122,7 @@ public class MainViewModel {
         timer.scheduleAtFixedRate(timerTask, 0, 1000);
     }
 
-    public int getTime() {
+    public int getExerciseTime() {
         return exerciseTimeInSeconds;
     }
 

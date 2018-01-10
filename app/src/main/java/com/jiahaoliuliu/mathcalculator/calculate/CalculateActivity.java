@@ -41,6 +41,9 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
         // Set the model
         mainViewModel = MainViewModel.getInstance();
+
+        updateExerciseTimer(mainViewModel.getExerciseTime());
+
         currentOperationModel = mainViewModel.getNextMathOperationModel();
         if (currentOperationModel != null) {
             activityCalculateBinding.setMathOperationModel(currentOperationModel);
@@ -87,7 +90,8 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
             return;
         }
         // Show next result
-        Intent showNextCalculateActivityIntent = new Intent(this, CalculateActivity.class);
+        Intent showNextCalculateActivityIntent =
+                new Intent(this, CalculateActivity.class);
         startActivity(showNextCalculateActivityIntent);
         finish();
     }
@@ -129,11 +133,20 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
         public void onReceive(Context context, Intent intent) {
             int exerciseTime = intent.getIntExtra(MainViewModel.INTENT_EXTRAS_EXERCISE_TIMER, 0);
             // Create the model
-            int minutes = exerciseTime / 60;
-            int seconds = exerciseTime % 60;
-            TotalTimer totalTimer = new TotalTimer(minutes, seconds);
-            activityCalculateBinding.setTotalTimer(totalTimer);
+            updateExerciseTimer(exerciseTime);
         }
+    }
+
+    private void updateExerciseTimer(int exerciseTime) {
+        if (activityCalculateBinding == null) {
+            Log.w(TAG, "The activity calculate binding cannot be null");
+            return;
+        }
+
+        int minutes = exerciseTime / 60;
+        int seconds = exerciseTime % 60;
+        TotalTimer totalTimer = new TotalTimer(minutes, seconds);
+        activityCalculateBinding.setTotalTimer(totalTimer);
     }
 
     @Override
