@@ -8,6 +8,9 @@ public class ConfigurationModel {
 
     private int numberOfExercises;
 
+    public ConfigurationModel() {
+    }
+
     public ConfigurationModel(int numberOfExercises) {
         this.numberOfExercises = numberOfExercises;
     }

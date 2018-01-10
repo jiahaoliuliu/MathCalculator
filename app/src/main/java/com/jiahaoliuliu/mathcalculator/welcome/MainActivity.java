@@ -13,8 +13,6 @@ import com.jiahaoliuliu.mathcalculator.calculate.CalculateActivity;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int LIST_SIZE = 5;
-
     private MainViewModel mainViewModel;
 
     @Override
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.start_button:
                     // Generate the model
-                    mainViewModel.generateNewMathOperationModelsList(LIST_SIZE);
+                    mainViewModel.generateNewMathOperationModelsList();
                     mainViewModel.startTimer(MainActivity.this);
 
                     // Start the new activity

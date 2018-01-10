@@ -3,6 +3,8 @@ package com.jiahaoliuliu.mathcalculator.data;
 import android.content.Context;
 import android.content.Intent;
 
+import com.jiahaoliuliu.mathcalculator.config.ConfigurationModel;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,9 @@ import java.util.TimerTask;
 public class MainViewModel {
     public static final String INTENT_ACTION_EXERCISE_TIMER = "INTENT_ACTION_EXERCISE_TIMER";
     public static final String INTENT_EXTRAS_EXERCISE_TIMER = "INTENT_EXTRAS_EXERCISE_TIMER";
+
+    // Configs
+    private static final int MINIMUM_NUMBER_OF_EXERCISES = 5;
 
     private static final boolean ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION = false;
     private static final int MAXIMUM_NUMBER_ON_ADDITION = 100;
@@ -29,6 +34,9 @@ public class MainViewModel {
     private TimerTask timerTask;
     private int exerciseTimeInSeconds;
 
+    // Configuration
+    private ConfigurationModel currentConfigurationModel;
+
     private MainViewModel() {
         // init the variable
         mathOperationModelsCollection = new ArrayList<>();
@@ -42,12 +50,18 @@ public class MainViewModel {
         return mainViewModel;
     }
 
-    public void generateNewMathOperationModelsList(int listSize) {
+    public void generateNewMathOperationModelsList() {
         // Restart the content of the list
         mathOperationModelsCollection.clear();
         collectionIterator = null;
 
-        for (int i = 0; i < listSize; i++) {
+        // Retrieve the current configuration
+        int numberOfExercises = currentConfigurationModel.getNumberOfExercises();
+        if (numberOfExercises < MINIMUM_NUMBER_OF_EXERCISES) {
+            numberOfExercises = MINIMUM_NUMBER_OF_EXERCISES;
+        }
+
+        for (int i = 0; i < numberOfExercises; i++) {
             MathOperationModel mathOperationModel = generateMathOperationModel();
 
             // Avoid duplications
@@ -56,7 +70,7 @@ public class MainViewModel {
             }
 
             // if it is the last number
-            if (i == listSize - 1) {
+            if (i == numberOfExercises - 1) {
                 mathOperationModel.setLastOperation(true);
             }
             mathOperationModelsCollection.add(mathOperationModel);
@@ -182,5 +196,21 @@ public class MainViewModel {
 
         return new MathOperationModel(firstNumber, mathOperation, secondNumber,
                 correctResult, false);
+    }
+
+    // Get the current configuration model.
+    public ConfigurationModel getCurrentConfigurationModel() {
+        if (currentConfigurationModel == null) {
+            // TODO: Retrieve it from the shared preferences if it does not exist
+            currentConfigurationModel = new ConfigurationModel();
+        }
+
+        return currentConfigurationModel;
+    }
+
+    public void setCurrentConfigurationModel(ConfigurationModel configurationModel) {
+        this.currentConfigurationModel = configurationModel;
+
+        // TODO: Save it persistently
     }
 }
