@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 import com.jiahaoliuliu.mathcalculator.R;
@@ -57,6 +58,18 @@ public class ConfigActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Do nothing
+            }
+        });
+
+        activityConfigBinding.additionAllowed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                // Update the checkbox
+                currentConfigurationModel.setAdditionAllowed(checked);
+                mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+                // Update the view
+                activityConfigBinding.setConfigurationModel(currentConfigurationModel);
             }
         });
 
