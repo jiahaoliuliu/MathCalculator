@@ -2,12 +2,8 @@ package com.jiahaoliuliu.mathcalculator.config;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.SeekBar;
 
 import com.jiahaoliuliu.mathcalculator.R;
@@ -36,6 +32,7 @@ public class ConfigActivity extends AppCompatActivity {
         activityConfigBinding.setConfigurationModel(currentConfigurationModel);
 
         // Link the views
+        setSupportActionBar(activityConfigBinding.toolbar);
         activityConfigBinding.numberOfExercises.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int numberOfExercises, boolean fromUser) {
