@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.jiahaoliuliu.mathcalculator.calculate.TotalTimer;
 import com.jiahaoliuliu.mathcalculator.data.GeneralResult;
 import com.jiahaoliuliu.mathcalculator.data.MathOperationModel;
 import com.jiahaoliuliu.mathcalculator.databinding.LayoutGeneralResultBinding;
@@ -17,11 +18,13 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int TYPE_ITEM = 1;
     private List<MathOperationModel> mathOperationModelsList;
     private GeneralResult generalResult;
+    private int exerciseTime;
 
     public ResultsListAdapter(List<MathOperationModel> mathOperationModelsList,
-                              GeneralResult generalResult) {
+                              GeneralResult generalResult, int exerciseTime) {
         this.mathOperationModelsList = mathOperationModelsList;
         this.generalResult = generalResult;
+        this.exerciseTime = exerciseTime;
     }
 
     @Override
@@ -44,7 +47,10 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof GeneralResultViewHolder) {
-            ((GeneralResultViewHolder)viewHolder).bind(generalResult);
+            // Exercise time
+            TotalTimer totalTimer = new TotalTimer(exerciseTime / 60, exerciseTime % 60);
+
+            ((GeneralResultViewHolder)viewHolder).bind(generalResult, totalTimer);
         } else if (viewHolder instanceof ResultViewHolder){ // If it is any item
             MathOperationModel mathOperationModel = mathOperationModelsList.get(position - 1);
             ((ResultViewHolder)viewHolder).bind(mathOperationModel);
@@ -94,8 +100,9 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.layoutGeneralResultBinding = layoutGeneralResultBinding;
         }
 
-        public void bind(GeneralResult generalResult) {
+        public void bind(GeneralResult generalResult, TotalTimer totalTimer) {
             layoutGeneralResultBinding.setGeneralResult(generalResult);
+            layoutGeneralResultBinding.setTotalTimer(totalTimer);
             layoutGeneralResultBinding.executePendingBindings();
         }
     }

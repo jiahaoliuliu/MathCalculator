@@ -50,8 +50,7 @@
                 android:layout_height="match_parent"
                 android:padding="4dp"
                 style="@style/Timer"
-                tools:text="m"
-                android:text="@string/minutes"
+                android:text="@string/minutes_short"
                 />
 
             <!-- seconds -->
@@ -69,8 +68,7 @@
                 android:layout_height="match_parent"
                 android:padding="4dp"
                 style="@style/Timer"
-                tools:text="s"
-                android:text="@string/seconds"
+                android:text="@string/seconds_short"
                 />
 
         </LinearLayout>

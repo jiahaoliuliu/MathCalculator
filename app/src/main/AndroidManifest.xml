@@ -20,13 +20,11 @@
         </activity>
         <activity
             android:name=".calculate.CalculateActivity"
-            android:label="@string/title_activity_calculate"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             />
         <activity
             android:name=".result.ResultActivity"
-            android:label="@string/title_activity_result"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             />
