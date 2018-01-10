@@ -31,6 +31,12 @@
         <item name="android:background">@drawable/strike</item>
     </style>
 
+    <style name="Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
     <style name="Timer">
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical</item>

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.jiahaoliuliu.mathcalculator.config.ConfigActivity;
 import com.jiahaoliuliu.mathcalculator.data.MainViewModel;
 import com.jiahaoliuliu.mathcalculator.R;
 import com.jiahaoliuliu.mathcalculator.calculate.CalculateActivity;
@@ -24,19 +25,33 @@ public class MainActivity extends AppCompatActivity {
         // Get the instance of the main view model
         mainViewModel = MainViewModel.getInstance();
 
-        // Link the button
-        binding.startButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                // Generate the model
-                mainViewModel.generateNewMathOperationModelsList(LIST_SIZE);
-                mainViewModel.startTimer(MainActivity.this);
+        // Link the buttons
+        binding.startButton.setOnClickListener(onClickListener);
+        binding.configButton.setOnClickListener(onClickListener);
 
-                // Start the new activity
-                Intent startCalculateActivityIntent =
-                        new Intent(MainActivity.this, CalculateActivity.class);
-                startActivity(startCalculateActivityIntent);
-            }
-        });
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.start_button:
+                    // Generate the model
+                    mainViewModel.generateNewMathOperationModelsList(LIST_SIZE);
+                    mainViewModel.startTimer(MainActivity.this);
+
+                    // Start the new activity
+                    Intent startCalculateActivityIntent =
+                            new Intent(MainActivity.this, CalculateActivity.class);
+                    startActivity(startCalculateActivityIntent);
+                    break;
+                case R.id.config_button:
+                    // Open configuration
+                    Intent startConfigurationActivityIntent =
+                            new Intent(MainActivity.this, ConfigActivity.class);
+                    startActivity(startConfigurationActivityIntent);
+                    break;
+            }
+        }
+    };
 }
