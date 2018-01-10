@@ -16,4 +16,6 @@
     <string name="title_activity_config">ConfigActivity</string>
     <string name="config_general_config">General configurations</string>
     <string name="config_number_of_exercises">Number of exercises</string>
+    <string name="config_addition">Addition</string>
+    <string name="config_maximum_addition_number">Maximum addition number</string>
 </resources>

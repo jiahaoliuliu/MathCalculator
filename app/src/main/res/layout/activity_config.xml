@@ -54,28 +54,25 @@
                 />
 
             <!-- Number of exercises -->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 >
                 <TextView
-                    android:id="@+id/number_of_exercises_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/NormalText"
+                    style="@style/ConfigText"
                     android:text="@string/config_number_of_exercises"
-                    android:layout_alignParentLeft="true"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/NormalText"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/number_of_exercises_title"
                     tools:text="100"
                     android:text="@{Integer.toString(configurationModel.numberOfExercises)}"
                     />
-            </RelativeLayout>
+            </LinearLayout>
             <android.support.v7.widget.AppCompatSeekBar
                 android:id="@+id/number_of_exercises"
                 android:layout_width="match_parent"
@@ -88,6 +85,58 @@
                 android:min="5"
                 android:progress="@{configurationModel.numberOfExercises}"
                 />
+            <!-- Separation line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <!-- Addition -->
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/ConfigText"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="@string/config_addition"
+                android:checked="@{configurationModel.additionAllowed}"
+                />
+            <!-- Maximum addition number -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ConfigText"
+                    android:text="@string/config_maximum_addition_number"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/NormalText"
+                    tools:text="100"
+                    android:text="@{Integer.toString(configurationModel.maximumAdditionNumber)}"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/maximum_addition_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_marginRight="-10dp"
+                android:max="100"
+                android:min="5"
+                android:progress="@{configurationModel.maximumAdditionNumber}"
+                />
+
         </LinearLayout>
     </LinearLayout>
 </layout>

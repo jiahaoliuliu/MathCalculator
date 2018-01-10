@@ -22,6 +22,10 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="ConfigText" parent="NormalText">
+        <item name="android:gravity">left</item>
+    </style>
+
     <style name="CorrectResult" parent="NormalText">
         <item name="android:textStyle">bold</item>
     </style>

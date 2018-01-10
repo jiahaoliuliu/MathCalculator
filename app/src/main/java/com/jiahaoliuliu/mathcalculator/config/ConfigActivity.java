@@ -32,9 +32,16 @@ public class ConfigActivity extends AppCompatActivity {
         activityConfigBinding.setConfigurationModel(currentConfigurationModel);
 
         // Link the views
+        setViews();
+    }
+
+    private void setViews() {
+        // Set up the action bar
         setSupportActionBar(activityConfigBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        // Set the listener for the seekbar
         activityConfigBinding.numberOfExercises.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int numberOfExercises, boolean fromUser) {
@@ -52,13 +59,24 @@ public class ConfigActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
-    }
 
-    // Action bar
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        activityConfigBinding.maximumAdditionNumber.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int maximumAdditionNumber, boolean b) {
+                // Set and save the value
+                updateMaximumAdditionNumber(maximumAdditionNumber);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+        });
     }
 
     private void updateNumberOfExercises(int numberOfExercises) {
@@ -74,5 +92,27 @@ public class ConfigActivity extends AppCompatActivity {
         // Update the view
         activityConfigBinding.setConfigurationModel(currentConfigurationModel);
     }
+
+    private void updateMaximumAdditionNumber(int maximumAdditionNumber) {
+        if (maximumAdditionNumber <= 0) {
+            Log.w(TAG, "The maximum addition number cannot be lower than 0");
+            return;
+        }
+
+        // Update the internal data
+        currentConfigurationModel.setMaximumAdditionNumber(maximumAdditionNumber);
+        mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+        // Update the view
+        activityConfigBinding.setConfigurationModel(currentConfigurationModel);
+    }
+
+    // Action bar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
 }
