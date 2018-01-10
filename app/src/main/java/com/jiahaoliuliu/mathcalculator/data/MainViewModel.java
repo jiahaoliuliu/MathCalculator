@@ -35,8 +35,12 @@ public class MainViewModel {
     // Configuration
     private ConfigurationModel currentConfigurationModel;
 
+    // Persistence
+    private PersistentManager persistentManager;
+
     private MainViewModel() {
         // init the variable
+        persistentManager = PersistentManager.getInstance();
         mathOperationModelsCollection = new ArrayList<>();
         currentConfigurationModel = getCurrentConfigurationModel();
     }
@@ -195,9 +199,16 @@ public class MainViewModel {
 
     // Get the current configuration model.
     public ConfigurationModel getCurrentConfigurationModel() {
+        // TODO: Test it
         if (currentConfigurationModel == null) {
-            // TODO: Retrieve it from the shared preferences if it does not exist
-            currentConfigurationModel = new ConfigurationModel();
+            if (!persistentManager.contains(PersistentManager.StringKey.CONFIGURATION_MODEL)) {
+                currentConfigurationModel = new ConfigurationModel();
+            } else {
+                currentConfigurationModel =
+                        new ConfigurationModel(
+                                persistentManager.get(
+                                        PersistentManager.StringKey.CONFIGURATION_MODEL));
+            }
         }
 
         return currentConfigurationModel;
@@ -206,6 +217,8 @@ public class MainViewModel {
     public void setCurrentConfigurationModel(ConfigurationModel configurationModel) {
         this.currentConfigurationModel = configurationModel;
 
-        // TODO: Save it persistently
+        // TODO: test it
+        persistentManager.set(PersistentManager.StringKey.CONFIGURATION_MODEL,
+                this.currentConfigurationModel.toJson());
     }
 }
