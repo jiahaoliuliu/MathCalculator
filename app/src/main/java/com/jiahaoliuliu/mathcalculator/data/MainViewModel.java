@@ -17,8 +17,6 @@ public class MainViewModel {
     public static final String INTENT_EXTRAS_EXERCISE_TIMER = "INTENT_EXTRAS_EXERCISE_TIMER";
 
     // Configs
-    private static final int MINIMUM_NUMBER_OF_EXERCISES = 5;
-
     private static final boolean ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION = false;
     private static final int MAXIMUM_NUMBER_ON_ADDITION = 100;
     private static final int MAXIMUM_NUMBER_ON_MULTIPLICATION = 10;
@@ -57,10 +55,6 @@ public class MainViewModel {
 
         // Retrieve the current configuration
         int numberOfExercises = currentConfigurationModel.getNumberOfExercises();
-        if (numberOfExercises < MINIMUM_NUMBER_OF_EXERCISES) {
-            numberOfExercises = MINIMUM_NUMBER_OF_EXERCISES;
-        }
-
         for (int i = 0; i < numberOfExercises; i++) {
             MathOperationModel mathOperationModel = generateMathOperationModel();
 

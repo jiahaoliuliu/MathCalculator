@@ -33,6 +33,8 @@ public class ConfigActivity extends AppCompatActivity {
 
         // Link the views
         setSupportActionBar(activityConfigBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         activityConfigBinding.numberOfExercises.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int numberOfExercises, boolean fromUser) {
@@ -50,6 +52,13 @@ public class ConfigActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
+    }
+
+    // Action bar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void updateNumberOfExercises(int numberOfExercises) {
