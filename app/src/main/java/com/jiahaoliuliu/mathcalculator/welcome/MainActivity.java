@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Generate the model
                 mainViewModel.generateNewMathOperationModelsList(LIST_SIZE);
+                mainViewModel.startTimer(MainActivity.this);
 
                 // Start the new activity
                 Intent startCalculateActivityIntent =

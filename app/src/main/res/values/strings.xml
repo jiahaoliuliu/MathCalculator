@@ -10,4 +10,6 @@
     <string name="correct_result_title">Correct:</string>
     <string name="wrong_result_title">Wrong:</string>
     <string name="total_result_title">Total:</string>
+    <string name="minutes">m</string>
+    <string name="seconds">s</string>
 </resources>
