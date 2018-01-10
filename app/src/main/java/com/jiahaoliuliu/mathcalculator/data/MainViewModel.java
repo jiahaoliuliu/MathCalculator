@@ -38,6 +38,7 @@ public class MainViewModel {
     private MainViewModel() {
         // init the variable
         mathOperationModelsCollection = new ArrayList<>();
+        currentConfigurationModel = getCurrentConfigurationModel();
     }
 
     public static MainViewModel getInstance() {
@@ -96,7 +97,7 @@ public class MainViewModel {
         return mathOperationModelsCollection;
     }
 
-    public GeneralResult getGeneralResult() {
+    public GeneralResultModel getGeneralResult() {
         int numberOfCorrectResults = 0;
         for (MathOperationModel mathOperationModel: mathOperationModelsCollection) {
             if (mathOperationModel.getGivenResult() == mathOperationModel.getCorrectResult()) {
@@ -104,7 +105,7 @@ public class MainViewModel {
             }
         }
 
-        return new GeneralResult(numberOfCorrectResults,
+        return new GeneralResultModel(numberOfCorrectResults,
                 mathOperationModelsCollection.size() - numberOfCorrectResults);
     }
 

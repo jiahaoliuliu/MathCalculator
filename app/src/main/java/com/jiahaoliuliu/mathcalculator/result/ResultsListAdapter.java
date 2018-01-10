@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.jiahaoliuliu.mathcalculator.calculate.TotalTimer;
-import com.jiahaoliuliu.mathcalculator.data.GeneralResult;
+import com.jiahaoliuliu.mathcalculator.data.GeneralResultModel;
 import com.jiahaoliuliu.mathcalculator.data.MathOperationModel;
 import com.jiahaoliuliu.mathcalculator.databinding.LayoutGeneralResultBinding;
 import com.jiahaoliuliu.mathcalculator.databinding.LayoutResultItemBinding;
@@ -17,13 +17,13 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private List<MathOperationModel> mathOperationModelsList;
-    private GeneralResult generalResult;
+    private GeneralResultModel generalResultModel;
     private int exerciseTime;
 
     public ResultsListAdapter(List<MathOperationModel> mathOperationModelsList,
-                              GeneralResult generalResult, int exerciseTime) {
+                              GeneralResultModel generalResultModel, int exerciseTime) {
         this.mathOperationModelsList = mathOperationModelsList;
-        this.generalResult = generalResult;
+        this.generalResultModel = generalResultModel;
         this.exerciseTime = exerciseTime;
     }
 
@@ -50,7 +50,7 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             // Exercise time
             TotalTimer totalTimer = new TotalTimer(exerciseTime / 60, exerciseTime % 60);
 
-            ((GeneralResultViewHolder)viewHolder).bind(generalResult, totalTimer);
+            ((GeneralResultViewHolder)viewHolder).bind(generalResultModel, totalTimer);
         } else if (viewHolder instanceof ResultViewHolder){ // If it is any item
             MathOperationModel mathOperationModel = mathOperationModelsList.get(position - 1);
             ((ResultViewHolder)viewHolder).bind(mathOperationModel);
@@ -100,8 +100,8 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.layoutGeneralResultBinding = layoutGeneralResultBinding;
         }
 
-        public void bind(GeneralResult generalResult, TotalTimer totalTimer) {
-            layoutGeneralResultBinding.setGeneralResult(generalResult);
+        public void bind(GeneralResultModel generalResultModel, TotalTimer totalTimer) {
+            layoutGeneralResultBinding.setGeneralResultModel(generalResultModel);
             layoutGeneralResultBinding.setTotalTimer(totalTimer);
             layoutGeneralResultBinding.executePendingBindings();
         }

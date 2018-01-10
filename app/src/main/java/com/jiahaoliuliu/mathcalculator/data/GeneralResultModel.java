@@ -3,13 +3,13 @@ package com.jiahaoliuliu.mathcalculator.data;
 /**
  * General result to be shown on the final list
  */
-public class GeneralResult {
+public class GeneralResultModel {
 
     private int numberOfCorrectResults;
     private int numberOfWrongResults;
     private int points = -1;
 
-    public GeneralResult(int numberOfCorrectResults, int numberOfWrongResults) {
+    public GeneralResultModel(int numberOfCorrectResults, int numberOfWrongResults) {
         this.numberOfCorrectResults = numberOfCorrectResults;
         this.numberOfWrongResults = numberOfWrongResults;
     }
@@ -60,7 +60,7 @@ public class GeneralResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GeneralResult that = (GeneralResult) o;
+        GeneralResultModel that = (GeneralResultModel) o;
 
         if (numberOfCorrectResults != that.numberOfCorrectResults) return false;
         if (numberOfWrongResults != that.numberOfWrongResults) return false;
@@ -77,7 +77,7 @@ public class GeneralResult {
 
     @Override
     public String toString() {
-        return "GeneralResult{" +
+        return "GeneralResultModel{" +
                 "totalNumberOfResults=" + getTotalNumberOfResults() +
                 ", numberOfCorrectResults=" + numberOfCorrectResults +
                 ", numberOfWrongResults=" + numberOfWrongResults +
