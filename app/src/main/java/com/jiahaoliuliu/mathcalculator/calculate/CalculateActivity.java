@@ -1,6 +1,9 @@
 package com.jiahaoliuliu.mathcalculator.calculate;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +29,9 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
     private MainViewModel mainViewModel;
     private MathOperationModel currentOperationModel;
 
+    // Timer
+    private ExerciseTimeBroadcastReceiver exerciseTimeBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,9 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
 
         // Set the model
         mainViewModel = MainViewModel.getInstance();
+
+        updateExerciseTimer(mainViewModel.getExerciseTime());
+
         currentOperationModel = mainViewModel.getNextMathOperationModel();
         if (currentOperationModel != null) {
             activityCalculateBinding.setMathOperationModel(currentOperationModel);
@@ -81,7 +90,8 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
             return;
         }
         // Show next result
-        Intent showNextCalculateActivityIntent = new Intent(this, CalculateActivity.class);
+        Intent showNextCalculateActivityIntent =
+                new Intent(this, CalculateActivity.class);
         startActivity(showNextCalculateActivityIntent);
         finish();
     }
@@ -93,6 +103,9 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
             return;
         }
         Log.v(TAG, "Finish clicked");
+
+        mainViewModel.stopTimer();
+
         Intent startResultActivityIntent = new Intent(this, ResultActivity.class);
         startActivity(startResultActivityIntent);
         finish();
@@ -111,5 +124,50 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
         currentOperationModel.setGivenResult(
                 Integer.parseInt(givenResultString));
         return true;
+    }
+
+    // Timer
+    private class ExerciseTimeBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int exerciseTime = intent.getIntExtra(MainViewModel.INTENT_EXTRAS_EXERCISE_TIMER, 0);
+            // Create the model
+            updateExerciseTimer(exerciseTime);
+        }
+    }
+
+    private void updateExerciseTimer(int exerciseTime) {
+        if (activityCalculateBinding == null) {
+            Log.w(TAG, "The activity calculate binding cannot be null");
+            return;
+        }
+
+        int minutes = exerciseTime / 60;
+        int seconds = exerciseTime % 60;
+        TotalTimer totalTimer = new TotalTimer(minutes, seconds);
+        activityCalculateBinding.setTotalTimer(totalTimer);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Register the broadcast receiver
+        if (exerciseTimeBroadcastReceiver == null) {
+            exerciseTimeBroadcastReceiver = new ExerciseTimeBroadcastReceiver();
+            registerReceiver(exerciseTimeBroadcastReceiver,
+                    new IntentFilter(MainViewModel.INTENT_ACTION_EXERCISE_TIMER));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        if (exerciseTimeBroadcastReceiver != null) {
+            unregisterReceiver(exerciseTimeBroadcastReceiver);
+            exerciseTimeBroadcastReceiver = null;
+        }
+
+        super.onPause();
     }
 }
