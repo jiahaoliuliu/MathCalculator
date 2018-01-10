@@ -32,8 +32,8 @@ public class ConfigActivity extends AppCompatActivity {
         // Retrieve the data
         mainViewModel = MainViewModel.getInstance();
 
-        // TODO: Retrieve the current configuration model
         currentConfigurationModel = mainViewModel.getCurrentConfigurationModel();
+        activityConfigBinding.setConfigurationModel(currentConfigurationModel);
 
         // Link the views
         activityConfigBinding.numberOfExercises.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -61,8 +61,12 @@ public class ConfigActivity extends AppCompatActivity {
             return;
         }
 
+        // Update the internal data
         currentConfigurationModel.setNumberOfExercises(numberOfExercises);
         mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+        // Update the view
+        activityConfigBinding.setConfigurationModel(currentConfigurationModel);
     }
 
 }

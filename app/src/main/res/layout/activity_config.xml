@@ -68,7 +68,8 @@
             android:layout_marginLeft="-10dp"
             android:layout_marginRight="-10dp"
             android:max="100"
-            android:min="1"
+            android:min="5"
+            android:progress="@{configurationModel.numberOfExercises}"
             />
     </LinearLayout>
 </layout>

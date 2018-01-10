@@ -6,7 +6,8 @@ package com.jiahaoliuliu.mathcalculator.config;
 
 public class ConfigurationModel {
 
-    private int numberOfExercises;
+    // The init value for the number of exercises is 5
+    private int numberOfExercises = 5;
 
     public ConfigurationModel() {
     }
