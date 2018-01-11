@@ -7,8 +7,8 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="generalResult"
-            type="com.jiahaoliuliu.mathcalculator.data.GeneralResult"
+            name="generalResultModel"
+            type="com.jiahaoliuliu.mathcalculator.data.GeneralResultModel"
             />
         <variable
             name="totalTimer"
@@ -49,7 +49,7 @@
                     tools:text="90"
                     android:textSize="50sp"
                     android:layout_centerHorizontal="true"
-                    android:text="@{Integer.toString(generalResult.points)}"
+                    android:text="@{Integer.toString(generalResultModel.points)}"
                     />
                 <!-- Points unit -->
                 <TextView
@@ -97,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/NormalText"
-                        android:text="@{Integer.toString(generalResult.totalNumberOfResults)}"
+                        android:text="@{Integer.toString(generalResultModel.totalNumberOfResults)}"
                         tools:text="50"
                         />
                 </LinearLayout>
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/NormalText"
-                        android:text="@{Integer.toString(generalResult.numberOfCorrectResults)}"
+                        android:text="@{Integer.toString(generalResultModel.numberOfCorrectResults)}"
                         tools:text="30"
                         />
                 </LinearLayout>
@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/NormalText"
-                        android:text="@{Integer.toString(generalResult.numberOfWrongResults)}"
+                        android:text="@{Integer.toString(generalResultModel.numberOfWrongResults)}"
                         tools:text="20"
                         />
                 </LinearLayout>

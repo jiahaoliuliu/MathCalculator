@@ -11,61 +11,230 @@
             />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.jiahaoliuliu.mathcalculator.config.ConfigActivity"
-        android:orientation="vertical"
-        android:padding="20dp"
-        >
-
-        <!-- General configs -->
-        <TextView
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Title"
-            android:text="@string/config_general_config"
-            />
-
-        <!-- Separation line -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@android:color/black"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            />
-
-        <!-- Number of exercises -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             >
-            <TextView
-                android:id="@+id/number_of_exercises_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/NormalText"
-                android:text="@string/config_number_of_exercises"
-                android:layout_alignParentLeft="true"
-                />
-            <TextView
+            <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/NormalText"
-                android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/number_of_exercises_title"
-                tools:text="100"
-                android:text="@{Integer.toString(configurationModel.numberOfExercises)}"
-                />
-        </RelativeLayout>
-        <android.support.v7.widget.AppCompatSeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="-10dp"
-            android:layout_marginRight="-10dp"
-            />
-    </LinearLayout>
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+            </android.support.design.widget.AppBarLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.jiahaoliuliu.mathcalculator.config.ConfigActivity"
+                android:orientation="vertical"
+                android:padding="20dp"
+                >
+
+                <!-- General configs -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Title"
+                    android:text="@string/config_general_config"
+                    />
+
+                <!-- Separation line -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <!-- Number of exercises -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ConfigText"
+                        android:text="@string/config_number_of_exercises"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText"
+                        tools:text="100"
+                        android:text="@{Integer.toString(configurationModel.numberOfExercises)}"
+                        />
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/number_of_exercises"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginRight="-10dp"
+                    android:max="100"
+                    android:min="5"
+                    android:progress="@{configurationModel.numberOfExercises}"
+                    />
+                <!-- Separation line -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <!-- Addition -->
+                <CheckBox
+                    android:id="@+id/addition_allowed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/ConfigText"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/config_addition"
+                    android:checked="@{configurationModel.additionAllowed}"
+                    />
+                <!-- Maximum addition number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ConfigText"
+                        android:text="@string/config_maximum_addition_number"
+                        android:enabled="@{configurationModel.additionAllowed}"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText"
+                        tools:text="100"
+                        android:text="@{Integer.toString(configurationModel.maximumAdditionNumber)}"
+                        android:enabled="@{configurationModel.additionAllowed}"
+                        />
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/maximum_addition_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginRight="-10dp"
+                    android:max="100"
+                    android:min="0"
+                    android:progress="@{configurationModel.maximumAdditionNumber}"
+                    />
+
+                <!-- Extraction -->
+                <CheckBox
+                    android:id="@+id/extraction_allowed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/ConfigText"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/config_extraction"
+                    android:checked="@{configurationModel.extractionAllowed}"
+                    />
+                <!-- Maximum extraction number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ConfigText"
+                        android:text="@string/config_maximum_extraction_number"
+                        android:enabled="@{configurationModel.extractionAllowed}"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText"
+                        tools:text="100"
+                        android:text="@{Integer.toString(configurationModel.maximumExtractionNumber)}"
+                        android:enabled="@{configurationModel.extractionAllowed}"
+                        />
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/maximum_extraction_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginRight="-10dp"
+                    android:max="100"
+                    android:min="0"
+                    android:progress="@{configurationModel.maximumExtractionNumber}"
+                    />
+
+                <!-- Multiplication -->
+                <CheckBox
+                    android:id="@+id/multiplication_allowed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/ConfigText"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/config_multiplication"
+                    android:checked="@{configurationModel.multiplicationAllowed}"
+                    />
+                <!-- Maximum multiplication number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ConfigText"
+                        android:text="@string/config_maximum_multiplication_number"
+                        android:enabled="@{configurationModel.multiplicationAllowed}"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText"
+                        tools:text="100"
+                        android:text="@{Integer.toString(configurationModel.maximumMultiplicationNumber)}"
+                        android:enabled="@{configurationModel.multiplicationAllowed}"
+                        />
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/maximum_multiplication_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginRight="-10dp"
+                    android:max="100"
+                    android:min="1"
+                    android:progress="@{configurationModel.maximumMultiplicationNumber}"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>

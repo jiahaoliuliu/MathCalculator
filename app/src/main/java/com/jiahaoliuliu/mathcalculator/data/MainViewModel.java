@@ -3,6 +3,8 @@ package com.jiahaoliuliu.mathcalculator.data;
 import android.content.Context;
 import android.content.Intent;
 
+import com.jiahaoliuliu.mathcalculator.config.ConfigurationModel;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,9 +16,8 @@ public class MainViewModel {
     public static final String INTENT_ACTION_EXERCISE_TIMER = "INTENT_ACTION_EXERCISE_TIMER";
     public static final String INTENT_EXTRAS_EXERCISE_TIMER = "INTENT_EXTRAS_EXERCISE_TIMER";
 
+    // Configs
     private static final boolean ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION = false;
-    private static final int MAXIMUM_NUMBER_ON_ADDITION = 100;
-    private static final int MAXIMUM_NUMBER_ON_MULTIPLICATION = 10;
 
     private List<MathOperationModel> mathOperationModelsCollection;
     private Iterator<MathOperationModel> collectionIterator;
@@ -29,9 +30,17 @@ public class MainViewModel {
     private TimerTask timerTask;
     private int exerciseTimeInSeconds;
 
+    // Configuration
+    private ConfigurationModel currentConfigurationModel;
+
+    // Persistence
+    private PersistentManager persistentManager;
+
     private MainViewModel() {
         // init the variable
+        persistentManager = PersistentManager.getInstance();
         mathOperationModelsCollection = new ArrayList<>();
+        currentConfigurationModel = getCurrentConfigurationModel();
     }
 
     public static MainViewModel getInstance() {
@@ -42,12 +51,14 @@ public class MainViewModel {
         return mainViewModel;
     }
 
-    public void generateNewMathOperationModelsList(int listSize) {
+    public void generateNewMathOperationModelsList() {
         // Restart the content of the list
         mathOperationModelsCollection.clear();
         collectionIterator = null;
 
-        for (int i = 0; i < listSize; i++) {
+        // Retrieve the current configuration
+        int numberOfExercises = currentConfigurationModel.getNumberOfExercises();
+        for (int i = 0; i < numberOfExercises; i++) {
             MathOperationModel mathOperationModel = generateMathOperationModel();
 
             // Avoid duplications
@@ -56,7 +67,7 @@ public class MainViewModel {
             }
 
             // if it is the last number
-            if (i == listSize - 1) {
+            if (i == numberOfExercises - 1) {
                 mathOperationModel.setLastOperation(true);
             }
             mathOperationModelsCollection.add(mathOperationModel);
@@ -88,7 +99,7 @@ public class MainViewModel {
         return mathOperationModelsCollection;
     }
 
-    public GeneralResult getGeneralResult() {
+    public GeneralResultModel getGeneralResult() {
         int numberOfCorrectResults = 0;
         for (MathOperationModel mathOperationModel: mathOperationModelsCollection) {
             if (mathOperationModel.getGivenResult() == mathOperationModel.getCorrectResult()) {
@@ -96,7 +107,7 @@ public class MainViewModel {
             }
         }
 
-        return new GeneralResult(numberOfCorrectResults,
+        return new GeneralResultModel(numberOfCorrectResults,
                 mathOperationModelsCollection.size() - numberOfCorrectResults);
     }
 
@@ -142,37 +153,44 @@ public class MainViewModel {
 
     private MathOperationModel generateMathOperationModel() {
         Random random = new Random();
-        MathOperationModel.Operation mathOperation =
-            MathOperationModel.Operation.retrieveOperation(
-                    random.nextInt(MathOperationModel.Operation.values().length));
+        MathOperationModel.Operation mathOperation = generateOperation(random);
         int firstNumber = 0;
         int secondNumber = 0;
         switch (mathOperation) {
             case ADDITION:
-                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
-                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                firstNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
+                secondNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
                 // Not exceed the maximum number
-                if (mathOperation.operate(firstNumber, secondNumber) > MAXIMUM_NUMBER_ON_ADDITION) {
+                if (mathOperation.operate(firstNumber, secondNumber) >
+                        currentConfigurationModel.getMaximumAdditionNumber()) {
                     // Generate a new number from the first number
                     int result = random.nextInt(
-                            MAXIMUM_NUMBER_ON_ADDITION - firstNumber + 1 ) + firstNumber;
+                            currentConfigurationModel.getMaximumAdditionNumber()
+                                    - firstNumber + 1 ) + firstNumber;
                     secondNumber = result - firstNumber;
                 }
                 break;
             case EXTRACTION:
-                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
-                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                firstNumber = random.nextInt(currentConfigurationModel.getMaximumExtractionNumber());
+                secondNumber = random.nextInt(currentConfigurationModel.getMaximumExtractionNumber());
                 // Negative number on extraction
                 if (!ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION) {
-                    // For now the negative number on extraction is not allowed. The new number i
-                    while ( secondNumber > firstNumber) {
-                        secondNumber = random.nextInt(firstNumber);
+                    // if the first number is zero, then set the second number as zero
+                    if (firstNumber == 0) {
+                        secondNumber = 0;
+                    } else {
+                        // For now the negative number on extraction is not allowed. The new number i
+                        while (secondNumber > firstNumber) {
+                            secondNumber = random.nextInt(firstNumber);
+                        }
                     }
                 }
                 break;
             case MULTIPLICATION:
-                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_MULTIPLICATION);
-                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_MULTIPLICATION);
+                firstNumber =
+                        random.nextInt(currentConfigurationModel.getMaximumMultiplicationNumber());
+                secondNumber =
+                        random.nextInt(currentConfigurationModel.getMaximumMultiplicationNumber());
                 // There is not other restriction on multiplication
                 break;
         }
@@ -182,5 +200,64 @@ public class MainViewModel {
 
         return new MathOperationModel(firstNumber, mathOperation, secondNumber,
                 correctResult, false);
+    }
+
+    /**
+     * Generate a random operation that is allowed by the current configuration
+     * @param random
+     *      The random generator
+     * @return
+     *      A random operation that is allowed by the current configuration
+     */
+    private MathOperationModel.Operation generateOperation(Random random) {
+        MathOperationModel.Operation operation;
+        do {
+            operation = MathOperationModel.Operation.retrieveOperation(
+                    random.nextInt(MathOperationModel.Operation.values().length));
+        } while (!isOperationAllowed(operation));
+
+        return operation;
+    }
+
+    /**
+     * Check if a certain math operation is allowed by the current configuration
+     * @param operation
+     * @return
+     */
+    private boolean isOperationAllowed(MathOperationModel.Operation operation) {
+        switch (operation) {
+            case ADDITION:
+                return currentConfigurationModel.isAdditionAllowed();
+            case EXTRACTION:
+                return currentConfigurationModel.isExtractionAllowed();
+            case MULTIPLICATION:
+                return currentConfigurationModel.isMultiplicationAllowed();
+            default:
+                return true;
+        }
+    }
+
+
+    // Get the current configuration model.
+    public ConfigurationModel getCurrentConfigurationModel() {
+        if (currentConfigurationModel == null) {
+            if (!persistentManager.contains(PersistentManager.StringKey.CONFIGURATION_MODEL)) {
+                currentConfigurationModel = new ConfigurationModel();
+            } else {
+                currentConfigurationModel =
+                        new ConfigurationModel(
+                                persistentManager.get(
+                                        PersistentManager.StringKey.CONFIGURATION_MODEL));
+            }
+        }
+
+        return currentConfigurationModel;
+    }
+
+    public void setCurrentConfigurationModel(ConfigurationModel configurationModel) {
+        this.currentConfigurationModel = configurationModel;
+
+        persistentManager.set(PersistentManager.StringKey.CONFIGURATION_MODEL,
+                this.currentConfigurationModel.toJson());
     }
 }
