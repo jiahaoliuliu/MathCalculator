@@ -90,6 +90,14 @@ public class MainViewModel {
         return null;
     }
 
+    public int getExerciseOrdinalNumber(MathOperationModel mathOperationModel) {
+        return mathOperationModelsCollection.indexOf(mathOperationModel);
+    }
+
+    public int getTotalNumberOfExercises() {
+        return mathOperationModelsCollection.size();
+    }
+
     /**
      * Get the list of results
      * @return

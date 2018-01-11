@@ -53,6 +53,9 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
         setSupportActionBar(activityCalculateBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.calculate_title,
+                mainViewModel.getExerciseOrdinalNumber(currentOperationModel)+1,
+                mainViewModel.getTotalNumberOfExercises()));
 
         // Set the edit text
         setEditText();

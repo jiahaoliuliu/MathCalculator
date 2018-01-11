@@ -46,8 +46,6 @@
             android:layout_weight="1"
             card_view:cardElevation="4dp"
             card_view:cardCornerRadius="4dp"
-            card_view:cardBackgroundColor=
-                "@{mathOperationModel.givenResult == mathOperationModel.correctResult ? @color/correctResultBackground : @color/wrongResultBackground}"
             android:layout_marginTop="@dimen/card_view_vertical_margin"
             android:layout_marginBottom="@dimen/card_view_vertical_margin"
             android:layout_marginLeft="@dimen/card_view_horizontal_margin"
@@ -124,8 +122,6 @@
             android:layout_weight="5"
             card_view:cardElevation="4dp"
             card_view:cardCornerRadius="4dp"
-            card_view:cardBackgroundColor=
-                "@{mathOperationModel.givenResult == mathOperationModel.correctResult ? @color/correctResultBackground : @color/wrongResultBackground}"
             android:layout_marginTop="@dimen/card_view_vertical_margin"
             android:layout_marginBottom="@dimen/card_view_vertical_margin"
             android:layout_marginLeft="@dimen/card_view_horizontal_margin"
