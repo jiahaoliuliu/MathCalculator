@@ -42,7 +42,7 @@ public class ConfigActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // Set the listener for the seekbar
+        // General settings: Number of exercises
         activityConfigBinding.numberOfExercises.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int numberOfExercises, boolean fromUser) {
@@ -61,6 +61,7 @@ public class ConfigActivity extends AppCompatActivity {
             }
         });
 
+        // Addition
         activityConfigBinding.additionAllowed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -70,6 +71,9 @@ public class ConfigActivity extends AppCompatActivity {
 
                 // Update the view
                 activityConfigBinding.setConfigurationModel(currentConfigurationModel);
+                // This should be done on the xml, but somehow it is not possible
+                activityConfigBinding.maximumAdditionNumber.setEnabled(
+                        currentConfigurationModel.isAdditionAllowed());
             }
         });
 
@@ -90,6 +94,41 @@ public class ConfigActivity extends AppCompatActivity {
                 // Do nothing
             }
         });
+
+        // Extraction
+        activityConfigBinding.extractionAllowed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                // Update the checkbox
+                currentConfigurationModel.setExtractionAllowed(checked);
+                mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+                // Update the view
+                activityConfigBinding.setConfigurationModel(currentConfigurationModel);
+                // This should be done on the xml, but somehow it is not possible
+                activityConfigBinding.maximumExtractionNumber.setEnabled(
+                        currentConfigurationModel.isExtractionAllowed());
+            }
+        });
+
+        activityConfigBinding.maximumExtractionNumber.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int maximumExtractionNumber, boolean b) {
+                // Set and save the value
+                updateMaximumExtractionNumber(maximumExtractionNumber);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+        });
+
     }
 
     private void updateNumberOfExercises(int numberOfExercises) {
@@ -114,6 +153,20 @@ public class ConfigActivity extends AppCompatActivity {
 
         // Update the internal data
         currentConfigurationModel.setMaximumAdditionNumber(maximumAdditionNumber);
+        mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+        // Update the view
+        activityConfigBinding.setConfigurationModel(currentConfigurationModel);
+    }
+
+    private void updateMaximumExtractionNumber(int maximumExtractionNumber) {
+        if (maximumExtractionNumber <= 0) {
+            Log.w(TAG, "The maximum extraction number cannot be lower than 0");
+            return;
+        }
+
+        // Update the internal data
+        currentConfigurationModel.setMaximumExtractionNumber(maximumExtractionNumber);
         mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
 
         // Update the view

@@ -116,6 +116,7 @@
                     android:layout_height="wrap_content"
                     style="@style/ConfigText"
                     android:text="@string/config_maximum_addition_number"
+                    android:enabled="@{configurationModel.additionAllowed}"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -123,6 +124,7 @@
                     style="@style/NormalText"
                     tools:text="100"
                     android:text="@{Integer.toString(configurationModel.maximumAdditionNumber)}"
+                    android:enabled="@{configurationModel.additionAllowed}"
                     />
             </LinearLayout>
             <android.support.v7.widget.AppCompatSeekBar
@@ -136,6 +138,52 @@
                 android:max="100"
                 android:min="5"
                 android:progress="@{configurationModel.maximumAdditionNumber}"
+                />
+
+            <!-- Extraction -->
+            <CheckBox
+                android:id="@+id/extraction_allowed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/ConfigText"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="@string/config_extraction"
+                android:checked="@{configurationModel.extractionAllowed}"
+                />
+            <!-- Maximum addition number -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ConfigText"
+                    android:text="@string/config_maximum_addition_number"
+                    android:enabled="@{configurationModel.extractionAllowed}"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/NormalText"
+                    tools:text="100"
+                    android:text="@{Integer.toString(configurationModel.maximumExtractionNumber)}"
+                    android:enabled="@{configurationModel.extractionAllowed}"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/maximum_extraction_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_marginRight="-10dp"
+                android:max="100"
+                android:min="5"
+                android:progress="@{configurationModel.maximumExtractionNumber}"
                 />
 
         </LinearLayout>

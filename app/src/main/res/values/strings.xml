@@ -18,4 +18,5 @@
     <string name="config_number_of_exercises">Number of exercises</string>
     <string name="config_addition">Addition(+)</string>
     <string name="config_maximum_addition_number">Maximum addition number</string>
+    <string name="config_extraction">Extraction(-)</string>
 </resources>

@@ -228,6 +228,8 @@ public class MainViewModel {
         switch (operation) {
             case ADDITION:
                 return currentConfigurationModel.isAdditionAllowed();
+            case EXTRACTION:
+                return currentConfigurationModel.isExtractionAllowed();
             default:
                 return true;
         }

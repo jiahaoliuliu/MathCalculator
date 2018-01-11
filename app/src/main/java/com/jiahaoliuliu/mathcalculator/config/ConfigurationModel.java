@@ -4,10 +4,17 @@ import com.google.gson.Gson;
 
 public class ConfigurationModel {
 
+    // General settings
     // The init value for the number of exercises is 5
     private int numberOfExercises = 5;
+
+    // Addition
     private boolean additionAllowed = true;
     private int maximumAdditionNumber = 100; // 100 is the init value
+
+    // Extraction
+    private boolean extractionAllowed = true;
+    private int maximumExtractionNumber = 100; // 100 is the init value
 
     // Let gson ignore itself on serialization
     private transient Gson gson;
@@ -16,10 +23,14 @@ public class ConfigurationModel {
         gson = new Gson();
     }
 
-    public ConfigurationModel(int numberOfExercises, boolean additionAllowed, int maximumAdditionNumber) {
+    public ConfigurationModel(int numberOfExercises, boolean additionAllowed,
+                              int maximumAdditionNumber, boolean extractionAllowed,
+                              int maximumExtractionNumber) {
         this.numberOfExercises = numberOfExercises;
         this.additionAllowed = additionAllowed;
         this.maximumAdditionNumber = maximumAdditionNumber;
+        this.extractionAllowed = extractionAllowed;
+        this.maximumExtractionNumber = maximumExtractionNumber;
         this.gson = new Gson();
     }
 
@@ -31,6 +42,8 @@ public class ConfigurationModel {
         this.numberOfExercises = configurationModel.numberOfExercises;
         this.additionAllowed = configurationModel.additionAllowed;
         this.maximumAdditionNumber = configurationModel.maximumAdditionNumber;
+        this.extractionAllowed = configurationModel.extractionAllowed;
+        this.maximumExtractionNumber = configurationModel.maximumExtractionNumber;
     }
 
     public int getNumberOfExercises() {
@@ -55,6 +68,22 @@ public class ConfigurationModel {
 
     public void setMaximumAdditionNumber(int maximumAdditionNumber) {
         this.maximumAdditionNumber = maximumAdditionNumber;
+    }
+
+    public boolean isExtractionAllowed() {
+        return extractionAllowed;
+    }
+
+    public void setExtractionAllowed(boolean extractionAllowed) {
+        this.extractionAllowed = extractionAllowed;
+    }
+
+    public int getMaximumExtractionNumber() {
+        return maximumExtractionNumber;
+    }
+
+    public void setMaximumExtractionNumber(int maximumExtractionNumber) {
+        this.maximumExtractionNumber = maximumExtractionNumber;
     }
 
     public String toJson() {
