@@ -22,4 +22,6 @@
     <string name="config_multiplication">Multiplication(x)</string>
     <string name="config_maximum_extraction_number">Maximum extraction number</string>
     <string name="config_maximum_multiplication_number">Maximum multiplication number</string>
+    <string name="calculate_time">Time:</string>
+    <string name="calculate_title">Exercise %d of %d</string>
 </resources>

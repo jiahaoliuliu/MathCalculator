@@ -49,6 +49,14 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
             activityCalculateBinding.setMathOperationModel(currentOperationModel);
         } // Else should never happens
 
+        // Set up the action bar
+        setSupportActionBar(activityCalculateBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.calculate_title,
+                mainViewModel.getExerciseOrdinalNumber(currentOperationModel)+1,
+                mainViewModel.getTotalNumberOfExercises()));
+
         // Set the edit text
         setEditText();
     }
@@ -169,5 +177,12 @@ public class CalculateActivity extends AppCompatActivity implements CalculationC
         }
 
         super.onPause();
+    }
+
+    // Action bar
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

@@ -38,7 +38,7 @@ public class ResultActivity extends AppCompatActivity {
         activityResultBinding.resultList.setLayoutManager(layoutManager);
 
         // Set the adapter
-        resultsListAdapter = new ResultsListAdapter(
+        resultsListAdapter = new ResultsListAdapter(this,
                 mainViewModel.getResultsList(), mainViewModel.getGeneralResult(), mainViewModel.getExerciseTime());
         activityResultBinding.resultList.setAdapter(resultsListAdapter);
     }

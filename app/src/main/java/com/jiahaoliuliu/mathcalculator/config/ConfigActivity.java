@@ -227,6 +227,4 @@ public class ConfigActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
 }
