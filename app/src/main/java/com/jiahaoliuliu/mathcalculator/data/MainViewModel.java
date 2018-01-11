@@ -18,7 +18,6 @@ public class MainViewModel {
 
     // Configs
     private static final boolean ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION = false;
-    private static final int MAXIMUM_NUMBER_ON_ADDITION = 100;
     private static final int MAXIMUM_NUMBER_ON_MULTIPLICATION = 10;
 
     private List<MathOperationModel> mathOperationModelsCollection;
@@ -155,31 +154,37 @@ public class MainViewModel {
 
     private MathOperationModel generateMathOperationModel() {
         Random random = new Random();
-        MathOperationModel.Operation mathOperation =
-            MathOperationModel.Operation.retrieveOperation(
-                    random.nextInt(MathOperationModel.Operation.values().length));
+        MathOperationModel.Operation mathOperation = generateOperation(random);
         int firstNumber = 0;
         int secondNumber = 0;
         switch (mathOperation) {
             case ADDITION:
-                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
-                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                firstNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
+                secondNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
                 // Not exceed the maximum number
-                if (mathOperation.operate(firstNumber, secondNumber) > MAXIMUM_NUMBER_ON_ADDITION) {
+                if (mathOperation.operate(firstNumber, secondNumber) >
+                        currentConfigurationModel.getMaximumAdditionNumber()) {
                     // Generate a new number from the first number
                     int result = random.nextInt(
-                            MAXIMUM_NUMBER_ON_ADDITION - firstNumber + 1 ) + firstNumber;
+                            currentConfigurationModel.getMaximumAdditionNumber()
+                                    - firstNumber + 1 ) + firstNumber;
                     secondNumber = result - firstNumber;
                 }
                 break;
             case EXTRACTION:
-                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
-                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_ADDITION);
+                // TODO: Set the maximum number of extraction
+                firstNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
+                secondNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
                 // Negative number on extraction
                 if (!ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION) {
-                    // For now the negative number on extraction is not allowed. The new number i
-                    while ( secondNumber > firstNumber) {
-                        secondNumber = random.nextInt(firstNumber);
+                    // if the first number is zero, then set the second number as zero
+                    if (firstNumber == 0) {
+                        secondNumber = 0;
+                    } else {
+                        // For now the negative number on extraction is not allowed. The new number i
+                        while (secondNumber > firstNumber) {
+                            secondNumber = random.nextInt(firstNumber);
+                        }
                     }
                 }
                 break;
@@ -197,9 +202,40 @@ public class MainViewModel {
                 correctResult, false);
     }
 
+    /**
+     * Generate a random operation that is allowed by the current configuration
+     * @param random
+     *      The random generator
+     * @return
+     *      A random operation that is allowed by the current configuration
+     */
+    private MathOperationModel.Operation generateOperation(Random random) {
+        MathOperationModel.Operation operation;
+        do {
+            operation = MathOperationModel.Operation.retrieveOperation(
+                    random.nextInt(MathOperationModel.Operation.values().length));
+        } while (!isOperationAllowed(operation));
+
+        return operation;
+    }
+
+    /**
+     * Check if a certain math operation is allowed by the current configuration
+     * @param operation
+     * @return
+     */
+    private boolean isOperationAllowed(MathOperationModel.Operation operation) {
+        switch (operation) {
+            case ADDITION:
+                return currentConfigurationModel.isAdditionAllowed();
+            default:
+                return true;
+        }
+    }
+
+
     // Get the current configuration model.
     public ConfigurationModel getCurrentConfigurationModel() {
-        // TODO: Test it
         if (currentConfigurationModel == null) {
             if (!persistentManager.contains(PersistentManager.StringKey.CONFIGURATION_MODEL)) {
                 currentConfigurationModel = new ConfigurationModel();
@@ -217,7 +253,6 @@ public class MainViewModel {
     public void setCurrentConfigurationModel(ConfigurationModel configurationModel) {
         this.currentConfigurationModel = configurationModel;
 
-        // TODO: test it
         persistentManager.set(PersistentManager.StringKey.CONFIGURATION_MODEL,
                 this.currentConfigurationModel.toJson());
     }
