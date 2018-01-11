@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import com.jiahaoliuliu.mathcalculator.calculate.TotalTimer;
 import com.jiahaoliuliu.mathcalculator.data.GeneralResultModel;
 import com.jiahaoliuliu.mathcalculator.data.MathOperationModel;
-import com.jiahaoliuliu.mathcalculator.databinding.LayoutGeneralResultBinding;
 import com.jiahaoliuliu.mathcalculator.databinding.LayoutResultFooterBinding;
+import com.jiahaoliuliu.mathcalculator.databinding.LayoutResultHeaderBinding;
 import com.jiahaoliuliu.mathcalculator.databinding.LayoutResultItemBinding;
 
 import java.util.List;
@@ -41,27 +41,27 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 LayoutInflater.from(parent.getContext());
 
         if (viewType == TYPE_HEADER) {
-            LayoutGeneralResultBinding generalResultBinding =
-                    LayoutGeneralResultBinding.inflate(layoutInflater, parent, false);
-            return new GeneralResultViewHolder(generalResultBinding);
+            LayoutResultHeaderBinding layoutResultHeaderBinding =
+                    LayoutResultHeaderBinding.inflate(layoutInflater, parent, false);
+            return new HeaderViewHolder(layoutResultHeaderBinding);
         } if (viewType == TYPE_FOOTER) {
-            LayoutResultFooterBinding resultFooterBinding =
+            LayoutResultFooterBinding layoutResultFooterBinding =
                     LayoutResultFooterBinding.inflate(layoutInflater, parent, false);
-            return new FooterViewHolder(resultFooterBinding, callerActivity);
+            return new FooterViewHolder(layoutResultFooterBinding, callerActivity);
         } else { // If it is any item
-            LayoutResultItemBinding itemBinding =
+            LayoutResultItemBinding layoutResultItemBinding =
                     LayoutResultItemBinding.inflate(layoutInflater, parent, false);
-            return new ResultViewHolder(itemBinding);
+            return new ResultViewHolder(layoutResultItemBinding);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (viewHolder instanceof GeneralResultViewHolder) {
+        if (viewHolder instanceof HeaderViewHolder) {
             // Exercise time
             TotalTimer totalTimer = new TotalTimer(exerciseTime / 60, exerciseTime % 60);
 
-            ((GeneralResultViewHolder)viewHolder).bind(generalResultModel, totalTimer);
+            ((HeaderViewHolder)viewHolder).bind(generalResultModel, totalTimer);
         } else if (viewHolder instanceof ResultViewHolder){ // If it is any item
             MathOperationModel mathOperationModel = mathOperationModelsList.get(position - 1);
             ((ResultViewHolder)viewHolder).bind(mathOperationModel);
@@ -108,29 +108,26 @@ public class ResultsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    public static class GeneralResultViewHolder extends RecyclerView.ViewHolder {
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        private LayoutGeneralResultBinding layoutGeneralResultBinding;
+        private LayoutResultHeaderBinding layoutResultHeaderBinding;
 
-        public GeneralResultViewHolder(LayoutGeneralResultBinding layoutGeneralResultBinding) {
-            super(layoutGeneralResultBinding.getRoot());
-            this.layoutGeneralResultBinding = layoutGeneralResultBinding;
+        public HeaderViewHolder(LayoutResultHeaderBinding layoutResultHeaderBinding) {
+            super(layoutResultHeaderBinding.getRoot());
+            this.layoutResultHeaderBinding = layoutResultHeaderBinding;
         }
 
         public void bind(GeneralResultModel generalResultModel, TotalTimer totalTimer) {
-            layoutGeneralResultBinding.setGeneralResultModel(generalResultModel);
-            layoutGeneralResultBinding.setTotalTimer(totalTimer);
-            layoutGeneralResultBinding.executePendingBindings();
+            layoutResultHeaderBinding.setGeneralResultModel(generalResultModel);
+            layoutResultHeaderBinding.setTotalTimer(totalTimer);
+            layoutResultHeaderBinding.executePendingBindings();
         }
     }
 
     public static class FooterViewHolder extends RecyclerView.ViewHolder {
 
-//        private LayoutResultFooterBinding layoutResultFooterBinding;
-
         public FooterViewHolder(LayoutResultFooterBinding layoutResultFooterBinding, final Activity callerActivity) {
             super(layoutResultFooterBinding.getRoot());
-//            this.layoutResultFooterBinding = layoutResultFooterBinding;
 
             layoutResultFooterBinding.getRoot().setOnClickListener(new View.OnClickListener(){
                 @Override

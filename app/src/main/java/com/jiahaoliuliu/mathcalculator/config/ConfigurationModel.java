@@ -18,7 +18,7 @@ public class ConfigurationModel {
 
     // Multiplication
     private boolean multiplicationAllowed = true;
-    private int maximumMultiplicationNumber = 100; // 100 is the init value
+    private int maximumMultiplicationNumber = 10; // 100 is the init value
 
     // Let gson ignore itself on serialization
     private transient Gson gson;
