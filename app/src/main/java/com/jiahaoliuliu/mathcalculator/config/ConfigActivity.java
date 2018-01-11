@@ -129,6 +129,40 @@ public class ConfigActivity extends AppCompatActivity {
             }
         });
 
+        // Multiplication
+        activityConfigBinding.multiplicationAllowed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                // Update the checkbox
+                currentConfigurationModel.setMultiplicationAllowed(checked);
+                mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+                // Update the view
+                activityConfigBinding.setConfigurationModel(currentConfigurationModel);
+                // This should be done on the xml, but somehow it is not possible
+                activityConfigBinding.maximumMultiplicationNumber.setEnabled(
+                        currentConfigurationModel.isMultiplicationAllowed());
+            }
+        });
+
+        activityConfigBinding.maximumMultiplicationNumber.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int maximumMultiplicationNumber, boolean b) {
+                // Set and save the value
+                updateMaximumMultiplicationNumber(maximumMultiplicationNumber);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Do nothing
+            }
+        });
     }
 
     private void updateNumberOfExercises(int numberOfExercises) {
@@ -167,6 +201,20 @@ public class ConfigActivity extends AppCompatActivity {
 
         // Update the internal data
         currentConfigurationModel.setMaximumExtractionNumber(maximumExtractionNumber);
+        mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
+
+        // Update the view
+        activityConfigBinding.setConfigurationModel(currentConfigurationModel);
+    }
+
+    private void updateMaximumMultiplicationNumber(int maximumMultiplication) {
+        if (maximumMultiplication <= 0) {
+            Log.w(TAG, "The maximum multiplication number cannot be lower than 0");
+            return;
+        }
+
+        // Update the internal data
+        currentConfigurationModel.setMaximumMultiplicationNumber(maximumMultiplication);
         mainViewModel.setCurrentConfigurationModel(currentConfigurationModel);
 
         // Update the view

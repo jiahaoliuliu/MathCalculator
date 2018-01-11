@@ -19,4 +19,7 @@
     <string name="config_addition">Addition(+)</string>
     <string name="config_maximum_addition_number">Maximum addition number</string>
     <string name="config_extraction">Extraction(-)</string>
+    <string name="config_multiplication">Multiplication(x)</string>
+    <string name="config_maximum_extraction_number">Maximum extraction number</string>
+    <string name="config_maximum_multiplication_number">Maximum multiplication number</string>
 </resources>

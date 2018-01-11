@@ -18,7 +18,6 @@ public class MainViewModel {
 
     // Configs
     private static final boolean ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION = false;
-    private static final int MAXIMUM_NUMBER_ON_MULTIPLICATION = 10;
 
     private List<MathOperationModel> mathOperationModelsCollection;
     private Iterator<MathOperationModel> collectionIterator;
@@ -172,9 +171,8 @@ public class MainViewModel {
                 }
                 break;
             case EXTRACTION:
-                // TODO: Set the maximum number of extraction
-                firstNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
-                secondNumber = random.nextInt(currentConfigurationModel.getMaximumAdditionNumber());
+                firstNumber = random.nextInt(currentConfigurationModel.getMaximumExtractionNumber());
+                secondNumber = random.nextInt(currentConfigurationModel.getMaximumExtractionNumber());
                 // Negative number on extraction
                 if (!ALLOW_NEGATIVE_NUMBER_ON_EXTRACTION) {
                     // if the first number is zero, then set the second number as zero
@@ -189,8 +187,10 @@ public class MainViewModel {
                 }
                 break;
             case MULTIPLICATION:
-                firstNumber = random.nextInt(MAXIMUM_NUMBER_ON_MULTIPLICATION);
-                secondNumber = random.nextInt(MAXIMUM_NUMBER_ON_MULTIPLICATION);
+                firstNumber =
+                        random.nextInt(currentConfigurationModel.getMaximumMultiplicationNumber());
+                secondNumber =
+                        random.nextInt(currentConfigurationModel.getMaximumMultiplicationNumber());
                 // There is not other restriction on multiplication
                 break;
         }
@@ -230,6 +230,8 @@ public class MainViewModel {
                 return currentConfigurationModel.isAdditionAllowed();
             case EXTRACTION:
                 return currentConfigurationModel.isExtractionAllowed();
+            case MULTIPLICATION:
+                return currentConfigurationModel.isMultiplicationAllowed();
             default:
                 return true;
         }

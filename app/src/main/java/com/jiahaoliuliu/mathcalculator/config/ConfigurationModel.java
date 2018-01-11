@@ -16,6 +16,10 @@ public class ConfigurationModel {
     private boolean extractionAllowed = true;
     private int maximumExtractionNumber = 100; // 100 is the init value
 
+    // Multiplication
+    private boolean multiplicationAllowed = true;
+    private int maximumMultiplicationNumber = 100; // 100 is the init value
+
     // Let gson ignore itself on serialization
     private transient Gson gson;
 
@@ -25,13 +29,15 @@ public class ConfigurationModel {
 
     public ConfigurationModel(int numberOfExercises, boolean additionAllowed,
                               int maximumAdditionNumber, boolean extractionAllowed,
-                              int maximumExtractionNumber) {
+                              int maximumExtractionNumber, boolean multiplicationAllowed,
+                              int maximumMultiplicationNumber) {
         this.numberOfExercises = numberOfExercises;
         this.additionAllowed = additionAllowed;
         this.maximumAdditionNumber = maximumAdditionNumber;
         this.extractionAllowed = extractionAllowed;
         this.maximumExtractionNumber = maximumExtractionNumber;
-        this.gson = new Gson();
+        this.multiplicationAllowed = multiplicationAllowed;
+        this.maximumMultiplicationNumber = maximumMultiplicationNumber;
     }
 
     public ConfigurationModel(String json) {
@@ -44,6 +50,8 @@ public class ConfigurationModel {
         this.maximumAdditionNumber = configurationModel.maximumAdditionNumber;
         this.extractionAllowed = configurationModel.extractionAllowed;
         this.maximumExtractionNumber = configurationModel.maximumExtractionNumber;
+        this.multiplicationAllowed = configurationModel.multiplicationAllowed;
+        this.maximumMultiplicationNumber = configurationModel.maximumMultiplicationNumber;
     }
 
     public int getNumberOfExercises() {
@@ -84,6 +92,22 @@ public class ConfigurationModel {
 
     public void setMaximumExtractionNumber(int maximumExtractionNumber) {
         this.maximumExtractionNumber = maximumExtractionNumber;
+    }
+
+    public boolean isMultiplicationAllowed() {
+        return multiplicationAllowed;
+    }
+
+    public void setMultiplicationAllowed(boolean multiplicationAllowed) {
+        this.multiplicationAllowed = multiplicationAllowed;
+    }
+
+    public int getMaximumMultiplicationNumber() {
+        return maximumMultiplicationNumber;
+    }
+
+    public void setMaximumMultiplicationNumber(int maximumMultiplicationNumber) {
+        this.maximumMultiplicationNumber = maximumMultiplicationNumber;
     }
 
     public String toJson() {
