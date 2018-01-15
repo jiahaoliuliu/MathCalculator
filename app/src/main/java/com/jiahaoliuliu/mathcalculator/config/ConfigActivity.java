@@ -1,15 +1,19 @@
 package com.jiahaoliuliu.mathcalculator.config;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 import com.jiahaoliuliu.mathcalculator.R;
+import com.jiahaoliuliu.mathcalculator.calculate.CalculateActivity;
 import com.jiahaoliuliu.mathcalculator.data.MainViewModel;
 import com.jiahaoliuliu.mathcalculator.databinding.ActivityConfigBinding;
+import com.jiahaoliuliu.mathcalculator.welcome.MainActivity;
 
 public class ConfigActivity extends AppCompatActivity {
 
@@ -161,6 +165,22 @@ public class ConfigActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Do nothing
+            }
+        });
+
+        activityConfigBinding.startButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                // Generate the model
+                mainViewModel.generateNewMathOperationModelsList();
+                mainViewModel.startTimer(ConfigActivity.this);
+
+                // Start the new activity
+                Intent startCalculateActivityIntent =
+                        new Intent(ConfigActivity.this, CalculateActivity.class);
+                startActivity(startCalculateActivityIntent);
+
+                finish();
             }
         });
     }
