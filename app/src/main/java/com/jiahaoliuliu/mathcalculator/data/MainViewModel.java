@@ -126,6 +126,7 @@ public class MainViewModel {
         // Restart the time
         exerciseTimeInSeconds = 0;
         // Restart the timer
+        stopTimer();
         timer = new Timer();
         // Restart the timer task
         timerTask = new TimerTask() {
