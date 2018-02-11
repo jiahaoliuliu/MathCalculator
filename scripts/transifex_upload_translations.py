@@ -64,12 +64,11 @@ transifexAPI.get_translation(PROJECT_SLUG, RESOURCE_SLUG, SOURCE_LANGUAGE, TEMP_
 
 # 2. Git diff
 # First part to print colourful output
-call(["git", "diff", "--no-index", LOCAL_STRING_LOCATION, TEMP_STRINGS])
+call(["git", "diff", "--no-index", TEMP_STRINGS, LOCAL_STRING_LOCATION])
 
 # 3. If not string will be removed, go to step 6
 #	Extra diff needed because this one does not show the colours
-diff = Popen(["git", "diff", "--no-index", LOCAL_STRING_LOCATION, TEMP_STRINGS], 
-                          stdout=PIPE).communicate()[0]
+diff = Popen(["git", "diff", "--no-index", TEMP_STRINGS, LOCAL_STRING_LOCATION], stdout=PIPE).communicate()[0]
 lines = diff.split('\n')
 removals = [l for l in lines if l.startswith('- ')]
 if not removals:
