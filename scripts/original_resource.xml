@@ -25,6 +25,7 @@
     <string name="calculate_time">Time:</string>
     <string name="calculate_title">Exercise %d of %d</string>
 
-    <string name="new_string_to_be_added_1">First string to be added</string>
-    <string name="new_string_to_be_added_2">Second string to be added</string>
+    <string name="string_to_be_removed_1">First string to be removed</string>
+    <string name="string_to_be_removed_2">Second string to be removed</string>
+    <string name="string_to_be_removed_3">Third string to be removed</string>
 </resources>

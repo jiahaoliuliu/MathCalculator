@@ -19,8 +19,8 @@
     <string name="config_addition">加法(+)</string>
     <string name="config_maximum_addition_number">加法最高数</string>
     <string name="config_extraction">减法(-)</string>
-    <string name="config_maximum_extraction_number">减法最高数</string>
     <string name="config_multiplication">乘法(x)</string>
+    <string name="config_maximum_extraction_number">减法最高数</string>
     <string name="config_maximum_multiplication_number">乘法最高数</string>
     <string name="calculate_time">时间:</string>
     <string name="calculate_title">第%d题， 总共%d题</string>
